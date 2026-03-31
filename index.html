@@ -46,6 +46,10 @@
   .suggestion-body em { color: #555; }
   .suggestion-body strong { color: #2c3e50; }
   .sugg-label { font-size: 0.75em; text-transform: uppercase; font-weight: 700; color: #8e44ad; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .sugg-label.ms { color: #2980b9; }
+  .referee-quote { background: #f0faf6; border-left: 3px solid #27ae60; padding: 10px 14px; margin: 8px 0 6px 0; border-radius: 0 4px 4px 0; font-size: 0.82em; font-style: italic; color: #555; line-height: 1.5; }
+  .suggestion-body.manuscript { border-left-color: #2980b9; background: #f0f6ff; }
+  .suggestion-body.letter { border-left-color: #8e44ad; background: #f9f6ff; }
 
   /* ---- Counter dashboard ---- */
   .dashboard {
@@ -303,304 +307,310 @@
   <span><span class="legend-dot done-dot"></span> Completed</span>
 </div>
 
-<!-- ================================================================== -->
-<div class="section-heading" id="sec-A">A. Manuscript (<code>manuscript_2025.tex</code>)</div>
-<!-- ================================================================== -->
+
+<div class="section-heading" id="sec-A">Manuscript</div>
 
 <div class="card high" id="task-t1">
   <div class="card-header">
     <input type="checkbox" id="t1" onchange="persist('t1')">
-    <span class="card-title" id="title-t1">Types of self-liquidating financial instruments (<em>rischi auto-liquidanti</em>)</span>
+    <span class="card-title" id="title-t1">Explain types of rischi auto-liquidanti</span>
     <span class="tag high">high</span>
   </div>
   <ul>
-    <li>Red placeholder footnote <code>{\red explain the different types}</code> has no actual content</li>
-    <li>The Letter to R2 (lines 301&ndash;315) contains the full taxonomy and magnitudes&mdash;never inserted into manuscript</li>
+    <li>Red placeholder footnote needs content on factoring pro-soluto, pro-solvendo, anticipi su fatture</li>
+    <li>Location: <code>manuscript_2025.tex:768</code></li>
   </ul>
-  <div class="file-box"><strong>Location:</strong> <code>manuscript_2025.tex:768</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Suggested footnote text</div>
-      <p>Replace the red placeholder with:</p>
-      <p>&ldquo;The main instruments are: (i) <em>factoring without recourse</em> (<em>pro-soluto</em>), in which a factor (e.g., a bank) purchases the invoice outright and absorbs the risk of non-payment by the debtor; (ii) <em>factoring with recourse</em> (<em>pro-solvendo</em>), in which the receivable is temporarily assigned to the factor but the seller retains ultimate liability if the debtor defaults; and (iii) <em>advances on invoices</em> (<em>anticipi su fatture</em>), the most common form, in which the bank provides liquidity against the invoice without any transfer of ownership. To get a sense of the magnitudes, in June 2011 the outstanding stock of factoring credit was roughly 35 billion euros (15 billion pro-soluto and 20 billion pro-solvendo), while total rischi auto-liquidanti stood at 183 billion euros. Factoring without recourse thus represented approximately 10% of the overall liquidity that banks extended to firms against their accounts receivable, confirming that the vast majority of these transactions do not involve a transfer of invoice ownership to the bank.&rdquo;</p>
-    </div>
+  <details><summary>+ Claude suggestion</summary>
+    <div class="suggestion-body"><p>Replace the red placeholder with a footnote listing: (i) factoring without recourse (pro-soluto) &mdash; factor purchases invoice, absorbs risk; (ii) factoring with recourse (pro-solvendo) &mdash; receivable temporarily assigned, seller retains liability; (iii) advances on invoices (anticipi su fatture) &mdash; most common, bank provides liquidity without ownership transfer. Include June 2011 magnitudes: 35bn factoring (15 pro-soluto, 20 pro-solvendo), 183bn total rischi auto-liquidanti. Factoring without recourse &asymp; 10% of total.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t2">
   <div class="card-header">
     <input type="checkbox" id="t2" onchange="persist('t2')">
-    <span class="card-title" id="title-t2">Average quarterly stock of invoice discounting and short-term bank credit</span>
+    <span class="card-title" id="title-t2">Fill in BDS aggregate data (XX/YY)</span>
     <span class="tag high">high</span>
   </div>
   <ul>
-    <li>Two numerical placeholders <strong>XX</strong> and <strong>YY</strong> unfilled: average quarterly outstanding of self-liquidating risks net of household loans, and total short-term NFC credit, over 2010q1&ndash;2019q4</li>
-    <li>Data must come from Bank of Italy BDS Tables TRI30101 and TFR20281</li>
+    <li>Two placeholders: average quarterly self-liquidating risks and total short-term NFC credit, 2010q1&ndash;2019q4</li>
+    <li>Location: <code>manuscript_2025.tex:770</code></li>
   </ul>
-  <div class="file-box"><strong>Location:</strong> <code>manuscript_2025.tex:770</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Data task &mdash; cannot compute without BDS access</div>
-      <p>I do not have access to the Bank of Italy BDS portal. The authors should: (1) download Table TRI30101 (total rischi auto-liquidanti) and Table TFR20281 (household cessione del quinto component); (2) subtract the latter from the former to isolate the NFC invoice-discounting series; (3) average over 2010q1&ndash;2019q4 for XX; (4) do the same with the short-term NFC credit series for YY.</p>
-      <p>Also fix a minor grammatical issue: &ldquo;was averaged YY a quarter&rdquo; should read &ldquo;averaged [YY] billion euros per quarter.&rdquo;</p>
-    </div>
+  <details><summary>+ Claude suggestion</summary>
+    <div class="suggestion-body"><p>Cannot compute without BDS access. Download Tables TRI30101 and TFR20281, subtract household component, average over 2010q1&ndash;2019q4. Fix grammar: &ldquo;was averaged&rdquo; &rarr; &ldquo;averaged.&rdquo;</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t3">
   <div class="card-header">
     <input type="checkbox" id="t3" onchange="persist('t3')">
-    <span class="card-title" id="title-t3">Finalize model-fit footnote and delete credit-allocation paragraph</span>
+    <span class="card-title" id="title-t3">Finalize model-fit footnote; delete credit-allocation paragraph</span>
     <span class="tag high">high</span>
   </div>
   <ul>
-    <li>(a) Footnote comparing model&rsquo;s 33% invoice-backed share to Italian 40% and US 30% (Caglio et al.) is still in <code>\textcolor{red}</code>&mdash;needs to be confirmed and de-colored</li>
-    <li>(b) Entire paragraph on credit allocation to wages still in red&mdash;must be <strong>deleted</strong> per agreement with R3 (fraction of bank credit going to wages is indeterminate)</li>
+    <li>(a) Line 962: footnote comparing 33% model to 40% data still in red &mdash; confirm and de-color</li>
+    <li>(b) Line 964: paragraph on credit allocation to wages &mdash; DELETE per R3 agreement</li>
+    <li>Location: <code>manuscript_2025.tex:962&ndash;964</code></li>
   </ul>
-  <div class="file-box"><strong>Location:</strong> <code>manuscript_2025.tex:962&ndash;964</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Two actions</div>
-      <p><strong>(a)</strong> If the 40% figure is confirmed against the BDS data, simply remove the <code>\textcolor{red}{...}</code> wrapper. The footnote text is well-written and needs no other edits.</p>
-      <p><strong>(b)</strong> Delete the entire paragraph beginning &ldquo;Aside from increasing its quantity&hellip;&rdquo; on line 964. The surrounding text connects cleanly: line 962 ends the credit-quantity comparison, and line 967 begins the second counterfactual.</p>
-    </div>
+  <details><summary>+ Claude suggestion</summary>
+    <div class="suggestion-body"><p>(a) Verify the 40% figure, then remove <code>\textcolor{red}</code> wrapper. (b) Delete entire paragraph at line 964. Surrounding text connects cleanly.</p></div>
   </details>
 </div>
-
-<!-- ================================================================== -->
-<div class="section-heading" id="sec-A2">A2. Appendix Gaps (<code>manuscript_2025.tex</code>)</div>
-<!-- ================================================================== -->
 
 <div class="card high" id="task-t38">
   <div class="card-header">
     <input type="checkbox" id="t38" onchange="persist('t38')">
-    <span class="card-title" id="title-t38">MPE extension appendix not included in manuscript (broken reference)</span>
+    <span class="card-title" id="title-t38">Include MPE appendix (broken reference)</span>
     <span class="tag high">high</span>
   </div>
   <ul>
-    <li>Main text line 522 references <code>\ref{app:MPE}</code> but <code>\label{app:MPE}</code> does not exist in the manuscript</li>
-    <li>A full draft exists at <code>Claude_drafts/Appendix_Extensions.tex</code> (MPE with linear pricing + two-theta formal analysis) but is never <code>\input</code>'d</li>
+    <li><code>\ref{app:MPE}</code> at line 522 points to nothing. Draft in <code>Claude_drafts/Appendix_Extensions.tex</code></li>
+    <li>Location: <code>manuscript_2025.tex:522</code></li>
   </ul>
-  <div class="file-box"><strong>Location:</strong> <code>manuscript_2025.tex:522</code> references it; <code>Claude_drafts/Appendix_Extensions.tex</code> has the draft</div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Action</div>
-      <p>Add <code>\input{Claude_drafts/Appendix_Extensions}</code> after the existing appendix sections (after line ~1982, or after the Numerical Algorithm section). This file contains two subsections: (1) <code>app:MPE</code> &mdash; the customer&rsquo;s problem, supplier&rsquo;s Bellman equation, and characterization of the three regions in the MPE; and (2) <code>app:two_thetas</code> &mdash; the heterogeneous-friction extension.</p>
-      <p>Before including, review the draft for consistency with the current main text: verify notation matches (e.g., that the revenue function uses the same arguments), and confirm the propositions/results align with what Section 3.3 now claims. The draft was written as a companion to &ldquo;Section 3.4&rdquo; but the main text now labels extensions as Section 3.3&mdash;update the cross-references.</p>
-    </div>
+  <details><summary>+ Claude suggestion</summary>
+    <div class="suggestion-body"><p>Add <code>\input{Claude_drafts/Appendix_Extensions}</code> after existing appendix sections. Review notation consistency first.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t39">
   <div class="card-header">
     <input type="checkbox" id="t39" onchange="persist('t39')">
-    <span class="card-title" id="title-t39">Solution accuracy measures (Den Haan 2010) not yet in manuscript</span>
+    <span class="card-title" id="title-t39">Add solution accuracy measures (Den Haan 2010)</span>
     <span class="tag high">high</span>
   </div>
   <ul>
-    <li>Response to R2 Comment 9 promises to report Den Haan (2010) accuracy measures in a footnote and appendix details</li>
-    <li>Neither &ldquo;Den Haan&rdquo; nor &ldquo;accuracy&rdquo; appear anywhere in <code>manuscript_2025.tex</code></li>
+    <li>Promised to R2 Comment 9 but &ldquo;Den Haan&rdquo; and &ldquo;accuracy&rdquo; absent from manuscript</li>
+    <li>Location: near <code>manuscript_2025.tex:645</code> (footnote) + Appendix A.4</li>
   </ul>
-  <div class="file-box"><strong>Location:</strong> Should go in <code>manuscript_2025.tex</code> Section 4 (near line 645) as a footnote, with details in Appendix A.4 (<code>app:numerical</code>, line 1577)</div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Footnote for main text (Section 4, around line 645)</div>
-      <p>&ldquo;We assess the accuracy of the approximate law of motion using the methodology of Den Haan (2010). Over a simulation of 5,000 periods, the maximum absolute error is 0.443% for wages and 0.441% for consumption; the average absolute error is 0.012% for both variables. These values indicate that the aggregate laws of motion are highly accurate. For comparison, Den Haan (2010) advocates for his method based on maximum (average) errors of 0.44% (0.12%) and 0.34% (0.12%).&rdquo;</p>
-      <div class="sugg-label">Appendix addition (app:numerical)</div>
-      <p>Add a subsection &ldquo;Accuracy of the Approximate Law of Motion&rdquo; to the Numerical Algorithm appendix. Report: (i) the Den Haan (2010) error metric formula; (ii) a table with max and average absolute errors for wages and consumption; (iii) the R&sup2; of the law of motion (already reported). Cite both <code>den2010solving</code> and <code>den2010comparison</code>.</p>
-    </div>
+  <details><summary>+ Claude suggestion</summary>
+    <div class="suggestion-body"><p>Add footnote: max absolute error 0.443%/0.441%, avg 0.012% for wages/consumption. Add subsection to numerical appendix with methodology.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t40">
   <div class="card-header">
     <input type="checkbox" id="t40" onchange="persist('t40')">
-    <span class="card-title" id="title-t40">Beta-shock extension appendix (if pursuing the &beta; shock)</span>
+    <span class="card-title" id="title-t40">Beta-shock appendix (if pursuing)</span>
     <span class="tag high">high</span>
   </div>
   <ul>
-    <li>The to-do file and <code>plans/section_3_4_revised.tex</code> reference <code>app:beta_shock</code> for the discount-factor shock analysis</li>
-    <li>This extension is needed to address R4 condition (b) (role of expectations / forward-looking constraint)</li>
-    <li>A draft appendix exists in <code>plans/section_3_4_revised.tex:124&ndash;230</code> but is not in the manuscript</li>
+    <li>Draft in <code>plans/section_3_4_revised.tex:124&ndash;230</code>, not in manuscript. Needed for R4(b)</li>
   </ul>
-  <div class="file-box"><strong>Location:</strong> Draft at <code>plans/section_3_4_revised.tex:124</code>; should be added to appendix after <code>app:MPE</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Decision required</div>
-      <p>This depends on whether you decide to include the &beta;-shock extension in the paper (currently listed as &ldquo;in progress&rdquo; in the to-do file and needed for R4 condition (b)). If included:</p>
-      <p><strong>Main text:</strong> Add a paragraph in Section 3.3 describing the &beta;-shock experiment: when &beta; falls, the trade credit constraint tightens immediately because the present value of the relationship drops. This is a channel absent from static frameworks. Show an IRF comparing trade credit economy vs. spot economy response.</p>
-      <p><strong>Appendix:</strong> Include the formal derivations from <code>plans/section_3_4_revised.tex:124&ndash;230</code> as a new appendix section <code>app:beta_shock</code>. Review for notation consistency with the current manuscript before including.</p>
-    </div>
+  <details><summary>+ Claude suggestion</summary>
+    <div class="suggestion-body"><p>Decision required. If included: add to Section 3.3 + appendix for derivations.</p></div>
   </details>
 </div>
 
-<!-- ================================================================== -->
-<div class="section-heading" id="sec-B">B. Letter to Editor (<code>Letter_to_Editor.tex</code>)</div>
-<!-- ================================================================== -->
+<div class="card high" id="task-t41">
+  <div class="card-header">
+    <input type="checkbox" id="t41" onchange="persist('t41')">
+    <span class="card-title" id="title-t41">Fix &ldquo;Appendix x&rdquo; placeholder</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Replace literal &ldquo;Appendix x&rdquo; with <code>\ref{app:problem_recursive}</code></li>
+    <li>Location: <code>manuscript_2025.tex:364</code></li>
+  </ul>
+</div>
+
+<div class="card high" id="task-t42">
+  <div class="card-header">
+    <input type="checkbox" id="t42" onchange="persist('t42')">
+    <span class="card-title" id="title-t42">Fix footnote &ldquo;X&rdquo; author placeholder</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Footnote starts &ldquo;X use the framework...&rdquo; &mdash; replace with correct <code>\cite{}</code></li>
+    <li>Location: <code>manuscript_2025.tex:518</code></li>
+  </ul>
+</div>
+
+<div class="card high" id="task-t43">
+  <div class="card-header">
+    <input type="checkbox" id="t43" onchange="persist('t43')">
+    <span class="card-title" id="title-t43">Fix broken equation refs in proofs</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li><code>eq:Jp</code>, <code>eq:ps_tc</code>, <code>eq:ptc_tc</code> (lines 1171, 1430) and <code>eq:x_tc</code> (line 1221) &mdash; all undefined</li>
+    <li>Add labels to equations or update refs to use existing labels</li>
+  </ul>
+</div>
+
+<div class="card high" id="task-t44">
+  <div class="card-header">
+    <input type="checkbox" id="t44" onchange="persist('t44')">
+    <span class="card-title" id="title-t44">Fix feasibility constraint typo</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Subtracts <code>p^s</code> twice instead of <code>p^s</code> and <code>p^{tc}</code></li>
+    <li>Location: <code>manuscript_2025.tex:245</code></li>
+  </ul>
+</div>
+
+<div class="card high" id="task-t45">
+  <div class="card-header">
+    <input type="checkbox" id="t45" onchange="persist('t45')">
+    <span class="card-title" id="title-t45">Resolve sector count: 54 vs 58</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Main text says 54 (lines 662, 783, 842); Table 1 note says 58 (line 683); appendix says 58 (lines 1986, 2006)</li>
+  </ul>
+</div>
+
+<div class="card high" id="task-t46">
+  <div class="card-header">
+    <input type="checkbox" id="t46" onchange="persist('t46')">
+    <span class="card-title" id="title-t46">Fix duplicate label App-der</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li><code>\label{App-der}</code> defined twice (lines 1150 and 1355). Rename one.</li>
+  </ul>
+</div>
+
+<div class="card low" id="task-t47">
+  <div class="card-header">
+    <input type="checkbox" id="t47" onchange="persist('t47')">
+    <span class="card-title" id="title-t47">Capitalization: &ldquo;This&rdquo; &rarr; &ldquo;this&rdquo;</span>
+    <span class="tag low">low</span>
+  </div>
+  <ul>
+    <li><code>Ceteris paribus, This</code> &rarr; <code>Ceteris paribus, this</code> at line 501</li>
+  </ul>
+</div>
+
+<div class="card low" id="task-t48">
+  <div class="card-header">
+    <input type="checkbox" id="t48" onchange="persist('t48')">
+    <span class="card-title" id="title-t48">Participation constraint commented out</span>
+    <span class="tag low">low</span>
+  </div>
+  <ul>
+    <li><code>J'(&theta;') &ge; 0</code> commented out at line 1122 but present in subsidies version (1164)</li>
+  </ul>
+</div>
+
+<div class="section-heading" id="sec-B">Letter to Editor</div>
 
 <div class="card high" id="task-t4">
   <div class="card-header">
     <input type="checkbox" id="t4" onchange="persist('t4')">
-    <span class="card-title" id="title-t4">Importance of modeling assumptions (cover letter bullet 3)</span>
+    <span class="card-title" id="title-t4">Modeling assumptions (bullet 3)</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Item 3 in the opening summary says &ldquo;TBD&rdquo;&mdash;needs a 1&ndash;2 sentence summary parallel to items 1, 2, and 4</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:167</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Suggested text</div>
-      <p>We have <strong>expanded our discussion of modeling assumptions and studied their role for the paper&rsquo;s key results</strong>. We consider two extensions of the simplified model: a version with linear pricing and no commitment (Markov Perfect Equilibrium), and a version with heterogeneous borrowing constraints for upstream and downstream firms. In both cases the core mechanisms&mdash;the credit multiplier, the pecking order, and state-dependent amplification&mdash;are preserved, supporting the robustness of our main findings.</p>
-    </div>
+  <div class="referee-quote">&ldquo;TBD: Discussion of importance of modeling assumptions.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>No manuscript change &mdash; this is a cover letter summary bullet.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We have expanded our discussion of modeling assumptions and studied their role for the paper&rsquo;s key results. We consider two extensions: a version with linear pricing and no commitment (MPE), and a version with heterogeneous borrowing constraints for upstream and downstream firms. In both cases the core mechanisms &mdash; the credit multiplier, the pecking order, and state-dependent amplification &mdash; are preserved.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t5">
   <div class="card-header">
     <input type="checkbox" id="t5" onchange="persist('t5')">
-    <span class="card-title" id="title-t5">Financial networks literature paragraph</span>
+    <span class="card-title" id="title-t5">Financial networks literature</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Response to Editor 1d is &ldquo;TBD&rdquo;&mdash;needs a quoted paragraph connecting to Acemoglu et al. (2015), Elliott et al. (2014), Cabrales et al. (2017)</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:326</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">For the letter + paper lit review</div>
-      <p>We have added a paragraph in the literature review distinguishing our paper from the financial-networks literature. We copy it here:</p>
-      <p>&ldquo;Our framework also connects to the literature on financial networks, which studies how the structure of inter-firm financial linkages shapes the propagation of shocks (e.g., Acemoglu, Ozdaglar, and Tahbaz-Salehi, 2015; Elliott, Golub, and Jackson, 2014; Cabrales, Gottardi, and Vega-Redondo, 2017). That literature examines how losses cascade through networks of cross-holdings, interbank exposures, or contractual obligations, and how network topology&mdash;density, concentration, contagion thresholds&mdash;determines systemic fragility. Our paper differs along two dimensions. First, the linkages in our model are supply-chain relationships sustained by relational incentives rather than balance-sheet cross-exposures; default does not occur on the equilibrium path, so contagion does not operate through realized losses. Second, the amplification mechanism in our model is forward-looking: trade credit tightens when the present value of the supplier&ndash;buyer relationship falls, not when losses are realized. This generates propagation driven by expectations about future relationship values rather than by the network topology of existing obligations.&rdquo;</p>
-    </div>
+  <div class="referee-quote">&ldquo;You could also briefly discuss the literature on financial networks.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add paragraph to lit review. Key distinction from Acemoglu et al. (2015), Elliott et al. (2014), Cabrales et al. (2017): those papers study contagion through balance-sheet cross-exposures and realized losses. Ours studies propagation through production-network trade credit via forward-looking relationship values.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We have added a paragraph in the literature review distinguishing our framework from the financial-networks literature. The linkages in our model are supply-chain relationships sustained by relational incentives rather than balance-sheet cross-exposures. Our amplification mechanism is forward-looking: trade credit tightens when the present value of the relationship falls, not when losses are realized. We copy the paragraph below for your convenience: [quote]</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t6">
   <div class="card-header">
     <input type="checkbox" id="t6" onchange="persist('t6')">
-    <span class="card-title" id="title-t6">De-emphasizing the credit multiplier</span>
+    <span class="card-title" id="title-t6">De-emphasize credit multiplier</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Empty response to Editor 1e: Ben suggests foregrounding amplification over the credit multiplier</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:341</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>Thank you for this guidance. We have restructured the paper to lead with the amplification results. In the revised introduction, the credit multiplier is now presented as a mechanism that explains <em>why</em> the economy is more fragile with trade credit&mdash;because the discounting of receivables creates additional leverage in the supply chain&mdash;rather than as a headline result in its own right. The abstract and conclusion now foreground the finding that the economy with trade credit is twice as responsive to financial shocks as the spot economy, and the credit multiplier (which supports 16% more output in steady state) appears as the structural underpinning of that fragility. We believe retaining the credit multiplier is useful precisely because it makes the amplification finding interpretable: the same mechanism that expands credit in normal times also creates the leverage that amplifies shocks. That said, we agree with your framing and have reorganized the presentation accordingly.</p>
-    </div>
+  <div class="referee-quote">&ldquo;I would personally de-emphasize a bit the &lsquo;credit multiplier.&rsquo; To me, the more exciting results are the ones regarding shock propagation.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Restructure intro, abstract, and conclusion to lead with the amplification result (2&times; responsiveness to financial shocks). Present the credit multiplier as the mechanism that creates the leverage, not as a standalone headline.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>Thank you for this guidance. We have restructured the paper to foreground the amplification results. The credit multiplier is now presented as the mechanism that explains <em>why</em> the economy is more fragile with trade credit &mdash; receivable discounting creates leverage that amplifies shocks &mdash; rather than as a headline result in its own right. We believe retaining it is useful precisely because it makes the amplification finding interpretable.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t7">
   <div class="card-header">
     <input type="checkbox" id="t7" onchange="persist('t7')">
-    <span class="card-title" id="title-t7">Paper shortened to 35 pages</span>
+    <span class="card-title" id="title-t7">Shorten paper to 35 pages</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Empty response to Editor 2: confirm the target was met and describe where cuts were made</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:361</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We have shortened the paper to 35 pages as requested. The main cuts were: (i) streamlined exposition of the model environment in Section 2, consolidating the discussion of financial markets and removing redundant steps; (ii) moved several derivations and technical details from the main text to the appendix; (iii) condensed the calibration discussion in Section 5.1 by removing extended motivation for individual parameter choices; (iv) removed the dynamic difference-in-differences analysis from the main text&mdash;our reasons for this are explained in detail below in response to your Comment 3. Consistent with your guidance, we retained the simplified model of Section 3 in the main text.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Shorten the paper by around 5 pages. The revised version should reach the conclusion by p.35.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Verify page count. Candidate cuts: streamline Section 2, move derivations to appendix, condense Section 5.1 calibration, remove DiD figure.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We have shortened the paper to 35 pages as requested. The main cuts were: (i) streamlined the model environment in Section 2; (ii) moved derivations to the appendix; (iii) condensed the calibration discussion; (iv) removed the dynamic DiD analysis (see Comment 3 below). Consistent with your guidance, we retained the simplified model of Section 3 in the main text.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t8">
   <div class="card-header">
     <input type="checkbox" id="t8" onchange="persist('t8')">
-    <span class="card-title" id="title-t8">Removing the dynamic DiD figure</span>
+    <span class="card-title" id="title-t8">Dynamic DiD and pre-trends</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Empty response to Editor 3: pre-trends in Figure 3(b), AER standards concern</li>
-    <li>Decision: remove figure, cite Costello (2020 JPE), add model validation table</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:376</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We have removed the dynamic difference-in-differences figure from the paper, following your guidance. We were not able to address R1&rsquo;s pre-trends concern in a way that meets AER standards, for two reasons. First, the Italian economy experienced two large financial shocks in close succession&mdash;the Great Recession (2008&ndash;2009) and the sovereign debt crisis (2011&ndash;2012)&mdash;making it difficult to isolate a clean post-treatment period. The absence of recovery after 2009 that R1 flags is, in our view, attributable to the sovereign debt crisis rather than a general downward trend, but we cannot credibly demonstrate this within the figure. Second, extending the pre-period is infeasible: the number of firms with consistent balance-sheet data in a balanced Orbis panel drops substantially before 2005, leaving too few observations for reliable sector-level averages.</p>
-      <p>In lieu of the figure, we have strengthened the quantitative section in two ways. We now cite Costello (2020, JPE) as direct empirical evidence of the mechanism at the heart of our model. In addition, we present a model validation exercise in Section 5 (Table 4) showing that the calibrated model matches&mdash;without targeting&mdash;the cross-sectoral patterns in the decline of trade credit and output during the Great Recession.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Address R1&rsquo;s point 3 about pre-trends&hellip; If you cannot convince yourselves that this is up to AER standards it will be better to cut it.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Remove Figure 4 from main text. Cite Costello (2020, JPE) as direct causal evidence. Add model validation exercise in Table 4 (untargeted cross-sectoral fit during GR).</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We have removed the DiD figure, following your guidance. We could not address the pre-trends concern to AER standards for two reasons. First, Italy experienced two financial shocks in succession &mdash; the Great Recession and the 2011&ndash;2012 sovereign debt crisis &mdash; making it difficult to isolate a clean post-treatment period. Second, Orbis coverage drops substantially before 2005, leaving too few firms for reliable sector-level averages. In lieu of the figure, we now cite Costello (2020, JPE) and present a model validation exercise in Table 4.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t9">
   <div class="card-header">
     <input type="checkbox" id="t9" onchange="persist('t9')">
-    <span class="card-title" id="title-t9">Revised calibration strategy and model fit</span>
+    <span class="card-title" id="title-t9">Calibration and model fit</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Empty response to Editor 4: &ldquo;the amount of additional amplification needs to be carefully quantified&rdquo;</li>
-    <li>Covers R2 point 4, R3 point 2</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:394</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We have substantially revised the calibration strategy and expanded the analysis of model fit.</p>
-      <p><strong>Revised calibration.</strong> We dropped the dynamic DiD estimates from targets. We set &sigma; to an external estimate from Baqaee and Farhi (2023) rather than identifying it internally. We added two new targets: (i) the gross markup of downstream firms, which directly disciplines &gamma; and determines surplus division; and (ii) the share of short-term bank credit backed by accounts receivable (~40% in the Italian credit register), which disciplines the credit multiplier. We calibrate the shock process by targeting simultaneously the decline in short-term debt, output, and trade credit during 2007&ndash;2009.</p>
-      <p><strong>Model validation.</strong> The cross-sectoral distribution of trade credit is not targeted. The model produces correlations with the data of 0.54 for the level of AP/sales and 0.42 for the change in AP during the Great Recession. It also correctly signs the correlations between trade credit and intermediate input intensity, supplier concentration, and bank credit usage. These results are in Table 4.</p>
-      <p><strong>Key results.</strong> The credit multiplier (16% more output) is disciplined by the 40% share of credit backed by receivables. The amplification result (2&times; responsiveness) follows from the observed decline in trade credit exceeding the decline in revenues during the crisis, placing the economy in the amplification region.</p>
-    </div>
+  <div class="referee-quote">&ldquo;The amount of additional amplification (&lsquo;twice as responsive&rsquo;) needs to be carefully quantified. Same for the credit multiplier (currently 16%).&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Drop DiD targets. Set &sigma; externally (Baqaee-Farhi 2023). Add targets: gross markups, share of bank credit backed by AR (~40%), TC decline during GR. Add Table 4 for cross-sectoral validation + sensitivity analysis.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We have substantially revised the calibration strategy. We set &sigma; to an external estimate, added targets for markups and the share of credit backed by receivables (~40%), and calibrate the shock to match the joint decline in short-term debt, output, and trade credit during 2007&ndash;2009. The model produces untargeted cross-sectoral correlations of 0.54 for AP/sales levels and 0.42 for the change in AP during the Great Recession.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t10">
   <div class="card-header">
     <input type="checkbox" id="t10" onchange="persist('t10')">
-    <span class="card-title" id="title-t10">Why micro-foundations matter for AER (R4&rsquo;s main point)</span>
+    <span class="card-title" id="title-t10">Why micro-foundations matter (R4 main point)</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Empty response to Editor 5: Ben relays R4&rsquo;s conditions (a), (b), (c)</li>
-    <li>Editor says &ldquo;the more of this you can do, the better&rdquo;</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:403</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We address R4&rsquo;s three criteria, focusing on (a) and (b).</p>
-      <p><strong>On (a):</strong> Our micro-foundation resolves a genuine conflict in the existing quantitative literature. Shao (2025) finds that trade credit <em>amplifies</em> financial shocks, while Reischer (2024) finds that it <em>smooths</em> them. This contradiction reflects different assumptions about what governs the trade credit limit, not different calibrations. Our micro-foundation derives the constraint from limited commitment: it binds on the present value of the relationship, generating a <em>state-dependent</em> response&mdash;trade credit smooths when suppliers are unconstrained and amplifies when they are constrained. The direction is an endogenous prediction, not an assumption. Our calibration places Italy in the amplification region.</p>
-      <p><strong>On (b):</strong> Because the constraint is forward-looking, current trade credit responds to changes in expectations about future conditions. Section 3.3.4 shows that a tightening of buyer borrowing capacity reduces trade credit even when suppliers are unaffected&mdash;because the relationship value J falls. This channel is absent from static frameworks. The micro-foundation also generates a novel policy implication (Section 5.4): subsidies to suppliers can be more effective than subsidies to customers, because customer subsidies weaken repayment incentives. This result cannot arise with reduced-form constraints.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Think hard about R4&rsquo;s main point: one would need to show (a) micro-foundations change quantitative answers, (b) rationalize new moments, or (c) bring granular micro-data.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>(a) Make the Shao-amplifies vs. Reischer-smooths contrast prominent in intro and Section 5. (b) Frame the beta-shock and two-theta extensions as exploiting the dynamic micro-foundation. (c) Add a brief limitations paragraph acknowledging the absence of firm-to-firm data.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>On (a): the existing literature reaches opposite conclusions &mdash; Shao (2025) finds amplification while Reischer (2024) finds smoothing. Our micro-foundation resolves this by deriving the constraint from limited commitment, which endogenously determines the sign. On (b): the forward-looking constraint generates dynamics absent from static frameworks (beta-shock extension, two-theta decomposition, supplier-vs-customer subsidy counterfactual). On (c): we acknowledge this honestly as a limitation and position cross-sectoral validation as the available substitute.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t11">
   <div class="card-header">
     <input type="checkbox" id="t11" onchange="persist('t11')">
-    <span class="card-title" id="title-t11">Role and robustness of modeling assumptions</span>
+    <span class="card-title" id="title-t11">Role of modeling assumptions</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Empty response to Editor 6: R3 point 1 (surplus division, asymmetric constraints, common &theta;) and R4 point 3.1</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:417</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We expanded Section 3.3 to discuss assumptions and study extensions.</p>
-      <p><strong>Surplus division.</strong> In the full model with N>1, downstream firms receive positive rents even when unconstrained. Revised calibration targets a 30% gross markup. The MPE extension (linear pricing, no commitment) preserves core predictions.</p>
-      <p><strong>Asymmetric constraints.</strong> Section 2.3 now discusses a forward-looking bank constraint (temporary exclusion after default). We argue this would not materially change results because the calibration targets the level and trajectory of bank debt.</p>
-      <p><strong>Common &theta;.</strong> Section 3.3.4 studies &theta;<sub>u</sub> &ne; &theta;<sub>d</sub>, isolating two complementarity channels. Both generate amplification.</p>
-      <p><strong>Equilibrium default (R4).</strong> Default does not occur on equilibrium path because the supplier adjusts continuation values. We discuss two tractable extensions that would generate default (mid-period idiosyncratic shocks, one-period contracts) and flag upstream propagation as a direction for future research.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Address R3 point 1 and R4 point 3.1 about model assumptions. What roles do they play and can you relax them?&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Section 3.3: MPE extension, two-theta model, discussion of dynamic bank constraint. Conclusion: mention equilibrium default as future work.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We address each assumption: <strong>Surplus division</strong> &mdash; in the full model with N&gt;1 suppliers, downstream firms receive rents; revised calibration targets 30% markup. <strong>Asymmetric constraints</strong> &mdash; a forward-looking bank constraint is possible; calibration targets the same moments regardless. <strong>Common &theta;</strong> &mdash; two-theta extension in Section 3.3.4 isolates the two channels. <strong>Equilibrium default</strong> &mdash; we discuss extensions (mid-period shocks, short-term contracts) and flag as future work.</p></div>
   </details>
 </div>
 
@@ -610,258 +620,182 @@
     <span class="card-title" id="title-t12">Two complementarities between bank and trade credit</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Empty response to Editor 7 (R1 point 1): buyer size &rarr; relationship value &rarr; trade credit</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:424</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We added Section 3.3.4, &ldquo;Financial shocks to suppliers versus buyers.&rdquo; R1 correctly identifies two complementarity channels: (i) supplier-financing (suppliers use bank credit to discount receivables) and (ii) relationship-value (tighter buyer constraints reduce J, tightening trade credit even if supplier capacity is unchanged).</p>
-      <p>We introduce &theta;<sub>u</sub> for suppliers and &theta;<sub>d</sub> for customers. A tightening of &theta;<sub>d</sub> holding &theta;<sub>u</sub> fixed reduces J, contracting trade credit through the relationship-value channel alone. A tightening of &theta;<sub>u</sub> holding &theta;<sub>d</sub> fixed reduces supplier discounting capacity. Both generate amplification. In the quantitative analysis we focus on aggregate shocks (&theta;<sub>u</sub> = &theta;<sub>d</sub>), but this section clarifies the distinct forces.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Answer R1&rsquo;s point 1 about a second form of complementarity.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>New Section 3.3.4 with &theta;<sub>u</sub> &ne; &theta;<sub>d</sub>. Two channels: supplier-financing (&theta;<sub>u</sub>) and relationship-value (&theta;<sub>d</sub>). Both generate amplification.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We added Section 3.3.4, &ldquo;Financial shocks to suppliers versus buyers.&rdquo; A tightening of &theta;<sub>d</sub> holding &theta;<sub>u</sub> fixed reduces trade credit through the relationship-value channel. A tightening of &theta;<sub>u</sub> holding &theta;<sub>d</sub> fixed reduces it through the financing channel. Both channels contribute to amplification in the quantitative analysis.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t13">
   <div class="card-header">
     <input type="checkbox" id="t13" onchange="persist('t13')">
-    <span class="card-title" id="title-t13">Modeling the Great Recession as a credit supply shock</span>
+    <span class="card-title" id="title-t13">Modeling the Great Recession</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Empty response to Editor 8 (R2 point 7): is a debt-limit shock appropriate?</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:432</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We have added a discussion in Section 5.1. Three considerations motivate the debt-limit shock:</p>
-      <p><strong>1. Italian data support quantity adjustment.</strong> Spreads on short-term corporate loans barely moved in 2008&ndash;2009, while loan volumes fell substantially&mdash;consistent with a debt-limit shock rather than an interest-rate shock.</p>
-      <p><strong>2. Clean identification of the trade credit response.</strong> A shock to &beta; would simultaneously affect both bank credit and trade credit (since TC limits depend on relationship present values), conflating the mechanism we want to study. The debt-limit shock cleanly isolates how trade credit responds when bank credit supply contracts.</p>
-      <p><strong>3. GE demand channel is present.</strong> Although we abstract from nominal rigidities, constrained firms&rsquo; output reduction lowers the aggregate consumption bundle, reducing demand for all varieties&mdash;including those of unconstrained firms. We have expanded this discussion in the revision.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Address R2&rsquo;s point 7 about how you model the Great Recession.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add paragraph to Section 5.1: (1) Italian data shows quantity not price adjustment; (2) a &beta; shock would contaminate the TC channel; (3) the GE demand channel is present.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We model the Great Recession as a tightening of firms&rsquo; debt limits (Jermann and Quadrini 2012). Three considerations: first, spreads on Italian short-term loans barely moved while volumes fell &mdash; consistent with a quantity shock. Second, a discount-factor shock would simultaneously affect trade credit limits, conflating the mechanism we study. Third, while we abstract from nominal rigidities, the model features a GE demand channel through the aggregate consumption bundle. We have expanded this discussion in Section 5.1.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t14">
   <div class="card-header">
     <input type="checkbox" id="t14" onchange="persist('t14')">
-    <span class="card-title" id="title-t14">Why Italy in Orbis</span>
+    <span class="card-title" id="title-t14">Why Orbis Italy</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Empty response to Editor 9 (R4 point 3.2): OECD rates Italy as &ldquo;middling&rdquo; coverage</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:439</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We use Italian Orbis data for three reasons, now articulated in a new paragraph in Section 5.1.</p>
-      <p><strong>Coverage.</strong> Italy&rsquo;s Orbis coverage is strong for 2005&ndash;2015. Our balanced panel includes 300,000+ firms across 58 sectors. We verified stability to coverage threshold changes.</p>
-      <p><strong>Institutional knowledge.</strong> We have detailed knowledge of Italian financial instruments for discounting receivables (<em>rischi autoliquidanti</em>). This allowed us to construct the key calibration target&mdash;the share of bank credit backed by receivables (~40%)&mdash;which is not readily available for other Orbis countries.</p>
-      <p><strong>Episode relevance.</strong> Italy experienced a sharp, well-documented bank credit contraction during the Great Recession. The institutional environment (pervasive trade credit) makes Italy a particularly informative case. We acknowledge in the conclusion that extending to other countries is an important direction.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Address R4&rsquo;s point 3.2 about Orbis Italy.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add paragraph to Section 5.1: coverage is strong for 2005&ndash;2015; Bank of Italy data (rischi autoliquidanti) lets us construct the AR-backed credit share; Great Recession episode is well-documented.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>The OECD assessment pools all firm sizes and years. For our sample period and medium-to-large firms, coverage is strong (300,000+ firms, 58 sectors). Italy is not an arbitrary choice: the Bank of Italy&rsquo;s credit register provides direct information on invoice discounting instruments that is unavailable in other Orbis countries. This institutional knowledge is what allows us to construct the key calibration target &mdash; the share of bank credit backed by receivables.</p></div>
   </details>
 </div>
 
 <div class="card low" id="task-t15">
   <div class="card-header">
     <input type="checkbox" id="t15" onchange="persist('t15')">
-    <span class="card-title" id="title-t15">Roadmap paragraph at end of introduction</span>
+    <span class="card-title" id="title-t15">Roadmap paragraph</span>
     <span class="tag low">low</span>
   </div>
-  <ul>
-    <li>Empty response to Minor 1</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:447</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We have added the following roadmap paragraph at the end of the introduction:</p>
-      <p>&ldquo;The remainder of the paper is organized as follows. Section 2 presents the model environment and defines equilibrium. Section 3 analyzes a simplified one-sector version that is analytically tractable and derives the main theoretical results. Section 4 extends the analysis to the full multi-sector model and describes the numerical solution. Section 5 presents the quantitative analysis. Section 6 concludes.&rdquo;</p>
-    </div>
+  <div class="referee-quote">&ldquo;Please add a roadmap paragraph at the end of your introduction.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add at end of introduction: &ldquo;The remainder of the paper is organized as follows. Section 2 presents the model. Section 3 analyzes a simplified version. Section 4 extends to the full model. Section 5 presents the quantitative analysis. Section 6 concludes.&rdquo;</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We have added the following roadmap paragraph at the end of the introduction: [quote it]</p></div>
   </details>
 </div>
 
 <div class="card low" id="task-t16">
   <div class="card-header">
     <input type="checkbox" id="t16" onchange="persist('t16')">
-    <span class="card-title" id="title-t16">&ldquo;Vertical supply chain&rdquo; terminology</span>
+    <span class="card-title" id="title-t16">&ldquo;Vertical supply chain&rdquo; wording</span>
     <span class="tag low">low</span>
   </div>
-  <ul>
-    <li>Empty response to Minor 2: Ben found &ldquo;vertical supply chain&rdquo; confusing given only two layers</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:456</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We now refer to &ldquo;supply chains with two layers&rdquo; and added a clarifying sentence in Section 2: &ldquo;Each supply chain in our model has exactly two layers: upstream firms that produce intermediate inputs and downstream firms that combine these inputs with labor to produce final goods.&rdquo;</p>
-    </div>
+  <div class="referee-quote">&ldquo;I found &lsquo;vertical supply chain&rsquo; confusing&hellip; only two layers.&rdquo;</div>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We adjusted the wording to &ldquo;vertical supply chain with two layers.&rdquo;</p></div>
   </details>
 </div>
 
 <div class="card low" id="task-t17">
   <div class="card-header">
     <input type="checkbox" id="t17" onchange="persist('t17')">
-    <span class="card-title" id="title-t17">Rename &ldquo;Data&rdquo; subsection containing Table 2</span>
+    <span class="card-title" id="title-t17">Rename &ldquo;Data&rdquo; subsection</span>
     <span class="tag low">low</span>
   </div>
-  <ul>
-    <li>Empty response to Minor 3</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:467</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We reorganized Section 5. Data description is now in Section 5.1 (&ldquo;Data and Calibration&rdquo;), while the regressions (Table 2) and model validation are in Section 5.2 (&ldquo;Cross-Sectional Predictions&rdquo;). This also accommodates the removal of the DiD analysis: Section 5.2 now contains a coherent narrative about model fit in normal times and during the crisis.</p>
-    </div>
+  <div class="referee-quote">&ldquo;It&rsquo;s odd that Table 2 and Figure 3 are in a subsection entitled &lsquo;Data.&rsquo;&rdquo;</div>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We reorganized Section 5. Data description is now in 5.1; regressions and model validation are in 5.2, &ldquo;Cross-Sectional Predictions.&rdquo;</p></div>
   </details>
 </div>
 
 <div class="card low" id="task-t18">
   <div class="card-header">
     <input type="checkbox" id="t18" onchange="persist('t18')">
-    <span class="card-title" id="title-t18">&ldquo;diff-in-diff&rdquo; &rarr; &ldquo;difference-in-differences (DiD)&rdquo;</span>
+    <span class="card-title" id="title-t18">&ldquo;diff-in-diff&rdquo; terminology</span>
     <span class="tag low">low</span>
   </div>
-  <ul>
-    <li>Empty response to Minor 4</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:474</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>Corrected throughout. Since the DiD analysis has been removed from the main text per Comment 3, the change applies primarily to passages explaining why it was removed and to any retained appendix discussion.</p>
-    </div>
+  <div class="referee-quote">&ldquo;&lsquo;diff-in-diff&rsquo; should be &lsquo;difference-in-differences&rsquo;, abbreviated DiD.&rdquo;</div>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>Corrected throughout.</p></div>
   </details>
 </div>
 
 <div class="card low" id="task-t19">
   <div class="card-header">
     <input type="checkbox" id="t19" onchange="persist('t19')">
-    <span class="card-title" id="title-t19">Consistent 16% vs. 14% output language</span>
+    <span class="card-title" id="title-t19">16% vs 14% inconsistency</span>
     <span class="tag low">low</span>
   </div>
-  <ul>
-    <li>Empty response to Minor 5</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:486</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>We now use consistent language throughout: &ldquo;trade credit supports X% more output.&rdquo; We added a row at the end of Table 5 labeled &ldquo;Implied output gain from trade credit&rdquo; that reports this figure directly. For clarity: if the spot economy produces 86% of benchmark output, the benchmark produces 1/0.86 &minus; 1 = 16.3% more, which we round to 16%.</p>
-    </div>
+  <div class="referee-quote">&ldquo;In the introduction you write 16% more output but in section 5.3 you write 14% less output.&rdquo;</div>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We now use consistent language (&ldquo;X% more output&rdquo;) throughout and added an &ldquo;Implied output gain from trade credit&rdquo; row to Table 5.</p></div>
   </details>
 </div>
 
-<!-- ================================================================== -->
-<div class="section-heading" id="sec-C">C. Letter to R1 (<code>Letter_to_R1.tex</code>)</div>
-<!-- ================================================================== -->
+<div class="section-heading" id="sec-C">Letter to R1</div>
 
 <div class="card high" id="task-t20">
   <div class="card-header">
     <input type="checkbox" id="t20" onchange="persist('t20')">
-    <span class="card-title" id="title-t20">Two-theta IRF figures missing from letter</span>
+    <span class="card-title" id="title-t20">Two-theta IRFs for letter</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Response to Comment 1 quotes Section 3.3.4 text but includes no figures&mdash;the quantitative decomposition into &theta;<sub>d</sub>&uarr; vs. &theta;<sub>u</sub>&uarr; is load-bearing</li>
-    <li>Matlab IRFs need to be generated, inserted as a figure, and surrounded by prose</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:198</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Letter text after the Section 3.3.4 quote</div>
-      <p>&ldquo;To illustrate these two channels quantitatively, Figure X reports impulse response functions of output, total bank credit, and trade credit to a shock that tightens only &theta;<sub>d</sub> (Panel A) and only &theta;<sub>u</sub> (Panel B), each holding the other friction fixed at &theta;<sub>L</sub>, starting from the amplification region. [Insert figure.] Panel A shows that even when suppliers&rsquo; own borrowing capacity is unchanged, a tightening of customer credit conditions reduces trade credit&mdash;because the relationship value J falls. Panel B shows the direct supplier channel: when &theta;<sub>u</sub> rises, suppliers can discount fewer receivables, forcing a cut in trade credit that bank borrowing cannot offset (owing to the pecking order). In both panels the output response exceeds that of the spot economy, confirming that both complementarity channels are operative.&rdquo;</p>
-      <div class="sugg-label">Paper action</div>
-      <p>Add a new figure in Section 3.3.4 produced from existing Matlab IRF code, running twice&mdash;once with &theta;<sub>d</sub> switching from &theta;<sub>L</sub> to &theta;<sub>H</sub> (holding &theta;<sub>u</sub> fixed), and once vice versa.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Another source of complementarity is that the size of the relationship depends on the size of the buyer&hellip; both seem equally important.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add IRF figure to Section 3.3.4: Panel A = &theta;<sub>d</sub>&uarr; (holding &theta;<sub>u</sub> fixed), Panel B = &theta;<sub>u</sub>&uarr; (holding &theta;<sub>d</sub> fixed). Produce from Matlab.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>To illustrate quantitatively, Figure X reports IRFs for each channel in isolation. Panel A shows that tightening customer credit conditions reduces trade credit via the relationship-value channel even when suppliers are unaffected. Panel B shows the direct supplier-financing channel: when &theta;<sub>u</sub> rises, suppliers can discount fewer receivables. In both cases, output falls more than in the spot economy.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t21">
   <div class="card-header">
     <input type="checkbox" id="t21" onchange="persist('t21')">
-    <span class="card-title" id="title-t21">Additional Proposition 2 exposition improvements</span>
+    <span class="card-title" id="title-t21">Proposition 2 exposition</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Placeholder &ldquo;Specifically, xxx.&rdquo; in response to Comment 4 about unclear exposition</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:307</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>Replace &ldquo;Specifically, xxx.&rdquo; with: &ldquo;Specifically, we reorganized Section 3.2 to distinguish three regions explicitly&mdash;the unconstrained region (&theta;=0), the smoothing region (&theta; &isin; (0,&theta;&#773;]), and the amplification region (&theta; > &theta;&#773;)&mdash;which were previously collapsed into two. Separating the unconstrained and smoothing regions allows us to explain the pecking order directly: trade credit is not used when final good firms are unconstrained, because extending it is costly for suppliers and unnecessary for customers. In the amplification region we added a closed-form output elasticity that decomposes into a leverage term (larger with trade credit because suppliers discount receivables) and a countervailing relationship-value term, making analytically precise the condition under which trade credit amplifies rather than dampens the shock.&rdquo;</p>
-    </div>
+  <div class="referee-quote">&ldquo;Proposition 2 and the explanation around pages 22&ndash;23 could be clearer.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Section 3.2: distinguish three regions explicitly (unconstrained, smoothing, amplification). Add closed-form output elasticity decomposition. Introduce &ldquo;pecking order&rdquo; label at first use.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We reorganized Section 3.2 to distinguish three regions &mdash; unconstrained (&theta;=0), smoothing (&theta; &isin; (0,&theta;&#773;]), and amplification (&theta; &gt; &theta;&#773;). We added a closed-form elasticity that decomposes the output response into a leverage term and a relationship-value term, making the amplification condition analytically precise.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t22">
   <div class="card-header">
     <input type="checkbox" id="t22" onchange="persist('t22')">
-    <span class="card-title" id="title-t22">Distributional plots of borrowing capacity across sectors</span>
+    <span class="card-title" id="title-t22">Distributional plots across sectors</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Comment 6 response is internal notes only: &ldquo;Think about having some distributional plots&hellip;&rdquo;</li>
-    <li>Need scatter of sector-level Lagrange multiplier on supplier constraint vs. model-predicted output fall</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:334</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Letter text</div>
-      <p>&ldquo;Thank you for this suggestion. We now show in Figure X a scatter plot of two sector-level objects from the calibrated model: the Lagrange multiplier on the supplier&rsquo;s borrowing constraint (horizontal axis, measuring how tightly the constraint binds) and the model-predicted percentage fall in output during the 2007&ndash;2009 shock (vertical axis). The figure shows a clear positive relationship: sectors where suppliers are more constrained in steady state experience disproportionately large output falls during the financial shock. This heterogeneity is driven primarily by the interaction between &eta;<sub>i</sub> and N<sub>i</sub>&mdash;sectors with high input shares and few suppliers are those where trade credit is most critical and the supplier&rsquo;s constraint most likely to bind.&rdquo;</p>
-      <div class="sugg-label">Paper action</div>
-      <p>Add scatter as new panel in Figure 6 or standalone figure in Section 5.2. X-axis: average Lagrange multiplier on supplier borrowing constraint evaluated at &theta;<sub>H</sub>. Y-axis: sector-level output fall. Produce from existing Matlab output.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Is it possible to see the distribution of the borrowing capacity effect in a more disaggregated way?&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add scatter to Section 5.2: x-axis = Lagrange multiplier on supplier borrowing constraint at &theta;<sub>H</sub>, y-axis = sector output fall. Produce from Matlab.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>Figure X shows a clear positive relationship: sectors where suppliers are more constrained in steady state experience disproportionately large output falls. These sectors have high intermediate-input shares and few suppliers, consistent with Proposition 3.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t23">
   <div class="card-header">
     <input type="checkbox" id="t23" onchange="persist('t23')">
-    <span class="card-title" id="title-t23">Micro-evidence references: section number and paragraph</span>
+    <span class="card-title" id="title-t23">Micro-evidence references</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>&ldquo;Section XX&rdquo; placeholder for where Boissay&ndash;Gropp, Garcia-Appendini&ndash;Montoriol-Garriga, and Willner are discussed</li>
-    <li>May need to write the paragraph if it doesn&rsquo;t yet exist in the manuscript</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:344</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Draft for the paper (Section 5.2)</div>
-      <p>&ldquo;Our results are also consistent with micro-evidence on suppliers as liquidity providers. Boissay and Gropp (2013) document using European firm-level data that liquidity shortfalls propagate along supply chains through trade credit defaults, a mechanism our model captures through the collapse of trade credit when suppliers&rsquo; borrowing constraints bind. Garcia-Appendini and Montoriol-Garriga (2013) exploit the 2007&ndash;2008 credit crisis and find that suppliers with better access to credit increased trade credit to constrained customers, consistent with the smoothing region of our model. Willner (2000) provides an early theoretical argument for suppliers&rsquo; comparative advantage in lending to customers, which motivates our reliance on the reputation mechanism.&rdquo;</p>
-      <p>Then replace &ldquo;Section XX&rdquo; in the letter with the correct section number.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Boissay and Gropp (2013), Garcia-Appendini and Montoriol-Garriga (2013), and Willner (2000) would be useful.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add paragraph to Section 5.2 citing these three papers as consistent micro-evidence. Replace &ldquo;Section XX&rdquo; in letter with correct number.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We have expanded the discussion in Section [X] to cite these papers. Boissay and Gropp (2013) document liquidity-driven trade credit defaults &mdash; consistent with our amplification mechanism. Garcia-Appendini and Montoriol-Garriga (2013) find that less-constrained suppliers increased TC during 2007&ndash;2008 &mdash; consistent with our smoothing region. Willner (2000) provides theoretical motivation for the supplier&rsquo;s information advantage.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t24">
   <div class="card-header">
     <input type="checkbox" id="t24" onchange="persist('t24')">
-    <span class="card-title" id="title-t24">Discussion of model abstractions: N, concentration, substitutability, bargaining</span>
+    <span class="card-title" id="title-t24">Model abstractions (N, concentration, bargaining)</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Comment 8 response is all-caps internal note: &ldquo;WE SHOULD SIMPLY ADD A DISCUSSION&hellip;&rdquo;</li>
-    <li>Need a paragraph for Section 2.3 and a polished letter response</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:354</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Draft for Section 2.3 of the paper</div>
-      <p>&ldquo;Several real-world dimensions of supply chains are absent from our model. First, we set the number of suppliers per sector N<sub>i</sub> to be fixed and use the Herfindahl index of supplier concentration as its empirical proxy. We abstract from the elasticity of substitution &sigma; as a separate source of cross-sectoral variation because we lack reliable sector-level estimates for Italy. Table 2 columns (5)&ndash;(7) show that controlling for network position and financial characteristics leaves the HHI<sup>supplier</sup> coefficient stable. Second, we assume suppliers are homogeneous within a sector. With heterogeneous suppliers, customers could diversify across suppliers with different constraints, weakening amplification. Third, suppliers make take-it-or-leave-it offers. Introducing Nash bargaining would alter surplus division, but the qualitative predictions survive, as we show in the MPE extension (Section 3.3.2) with competitive pricing.&rdquo;</p>
-      <div class="sugg-label">Letter text</div>
-      <p>Preface with: &ldquo;Thank you for this comment. We now include in Section 2.3 a discussion of the model features we abstract from. We paste the relevant passage below for your convenience:&rdquo;</p>
-    </div>
+  <div class="referee-quote">&ldquo;The paper should pay more attention to the role of N and product market concentration.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add paragraph to Section 2.3: (1) fixed N with HHI proxy, stable to controls (Table 2 cols 5&ndash;7); (2) homogeneous suppliers (diversification motive absent); (3) TIOLI vs Nash bargaining (MPE extension preserves results).</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We now include in Section 2.3 a discussion of the dimensions we abstract from. We use HHI as a proxy for N; Table 2 shows the coefficient is stable to network-position and financial controls. With heterogeneous suppliers, customers could diversify, weakening amplification &mdash; we flag this as future work. The MPE extension demonstrates that the qualitative predictions are robust to the bargaining protocol.</p></div>
   </details>
 </div>
 
@@ -871,115 +805,71 @@
     <span class="card-title" id="title-t25">Figure 2 Panel B: bank lending to suppliers</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Red placeholder: <code>***need to update figure in manuscript and copy here***</code></li>
-    <li>Figure must be regenerated to add supplier bank credit series, updated in manuscript and letter</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:469</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Matlab + paper action</div>
-      <p>Add a fourth series to Figure 2: bank credit to the supplier = (1&minus;&theta;)p<sup>tc</sup>. This is already computed in the steady-state characterization. Update <code>Figures/Figure_2.pdf</code>.</p>
-      <div class="sugg-label">Letter text</div>
-      <p>&ldquo;Panel B of Figure 2 (shown below) plots bank lending to suppliers alongside bank lending to final-good firms and trade credit. Bank lending to suppliers is zero in the unconstrained region, rises in the smoothing region as suppliers discount receivables to fund extended trade credit, and falls sharply once &theta; exceeds &theta;&#773; as the supplier&rsquo;s borrowing constraint binds. This panel makes the credit multiplier mechanism directly visible: suppliers act as conduits between the banking sector and final-good producers.&rdquo;</p>
-    </div>
+  <div class="referee-quote">&ldquo;Would it be possible to separately show bank lending to suppliers as well?&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Update Figure 2 to add supplier bank credit = (1&minus;&theta;)p<sup>tc</sup>. Produce from Matlab steady-state code.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>Panel B of Figure 2 now shows bank lending to suppliers. It is zero in the unconstrained region, rises in the smoothing region as suppliers discount receivables, and falls sharply once the supplier&rsquo;s borrowing constraint binds. This makes the credit multiplier mechanism directly visible.</p></div>
   </details>
 </div>
 
 <div class="card low" id="task-t26">
   <div class="card-header">
     <input type="checkbox" id="t26" onchange="persist('t26')">
-    <span class="card-title" id="title-t26">Number of firms in balanced panel from 2003</span>
+    <span class="card-title" id="title-t26">Number of firms in 2003 balanced panel</span>
     <span class="tag low">low</span>
   </div>
-  <ul>
-    <li>&ldquo;XX firms&rdquo; placeholder in DiD pre-trends response</li>
-    <li>Need to run panel construction code with 2003 start date</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:293</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>Run the Orbis panel construction with a 2003 start date and the same cleaning rules. Insert the resulting count. The sentence should read: &ldquo;&hellip;we would be able to construct a balanced panel with only [NUMBER] firms (rather than the approximately 300,000 we currently cover).&rdquo; The argument is strengthened if the number is below ~50,000, which would be too few for reliable cross-sectoral averages at the 2-digit NACE level.</p>
-    </div>
+  <div class="referee-quote">&ldquo;It would be good to see if the picture improves with a longer pre-difference period.&rdquo;</div>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>Extending the balanced panel to 2003 would reduce it to [NUMBER] firms (vs. ~300,000 currently), insufficient for reliable cross-sectoral averages at the 2-digit NACE level. Run the panel construction code with a 2003 start date to fill in the number.</p></div>
   </details>
 </div>
 
-<!-- ================================================================== -->
-<div class="section-heading" id="sec-D">D. Letter to R2 (<code>Letter_to_R2.tex</code>)</div>
-<!-- ================================================================== -->
+<div class="section-heading" id="sec-D">Letter to R2</div>
 
 <div class="card high" id="task-t27">
   <div class="card-header">
     <input type="checkbox" id="t27" onchange="persist('t27')">
-    <span class="card-title" id="title-t27">Per-paper differentiation in literature response</span>
+    <span class="card-title" id="title-t27">Per-paper literature differentiation</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>&ldquo;Beef up&rdquo; placeholder for discussing Miranda-Pinto &amp; Zhang, Shao, Hardy et al., Garcia-Marin et al.</li>
-    <li>Each paper needs concrete paragraph explaining what it does and where our paper goes further</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R2.tex:172</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Letter text</div>
-      <p>Thank you for this comment. We have substantially expanded the literature review.</p>
-      <p><strong>Miranda-Pinto and Zhang (2024)</strong> study trade credit during the Great Recession with a micro-foundation based on input-quality uncertainty and costly monitoring. Their enforcement mechanism is static and information-based. We differ in two respects: our micro-foundation is dynamic and relational (enforcement depends on the continuation value of the relationship), and our model features a credit-multiplier mechanism absent in their framework.</p>
-      <p><strong>Shao (2025)</strong> introduces heterogeneous firms with receivables as collateral, governed by reduced-form constraints. The key distinction is that trade credit in Shao is perfectly enforceable by assumption, while in our model enforcement is endogenous&mdash;it depends on the relationship value, generating state-dependent linkages.</p>
-      <p><strong>Hardy, Saffie, and Simonovska (2024)</strong> use Orbis data to study FX-risk and trade credit in international trade. We use Italian Orbis for a different purpose: disciplining cross-sectoral variation in a general-equilibrium model. Their environment is static and partial-equilibrium.</p>
-      <p><strong>Garcia-Marin, Justel, and Schmidt-Eisenlohr (2019)</strong> provide micro-evidence that suppliers with larger markups extend more trade credit&mdash;directly supportive of our model. We embed this enforcement logic in a dynamic GE model and trace out its aggregate implications.</p>
-      <div class="sugg-label">Paper action</div>
-      <p>Replace the existing literature paragraph with structured, per-paper discussion organized around: (i) static vs. dynamic enforcement; (ii) reduced-form vs. micro-founded collateral; (iii) partial-equilibrium vs. GE.</p>
-    </div>
+  <div class="referee-quote">&ldquo;There are other large quantitative models&hellip; The authors should strengthen their case for contribution, with a focus on the model&rsquo;s quantitative dimension.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Restructure lit review: per-paper discussion organized around static vs. dynamic enforcement, reduced-form vs. micro-founded, partial-equilibrium vs. GE.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We address each paper: <strong>Miranda-Pinto and Zhang (2024)</strong> &mdash; static monitoring micro-foundation; we differ in dynamic enforcement and credit multiplier. <strong>Shao (2025)</strong> &mdash; reduced-form collateral; we differ in endogenous enforcement via relationship value. <strong>Hardy et al. (2024)</strong> &mdash; FX-risk, partial-equilibrium; we study domestic credit in GE. <strong>Garcia-Marin et al. (2019)</strong> &mdash; supportive micro-evidence on markups and TC, which we embed in a GE model.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t28">
   <div class="card-header">
     <input type="checkbox" id="t28" onchange="persist('t28')">
-    <span class="card-title" id="title-t28">MPE extension: polished response on commitment robustness</span>
+    <span class="card-title" id="title-t28">Commitment robustness (MPE)</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Comment 2 response is internal bullet-point notes with unfinished sentences</li>
-    <li>Needs polished prose defending the commitment baseline and summarizing the MPE extension</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R2.tex:186</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Letter text</div>
-      <p>Thank you for this comment. We added Section 3.4 studying the model without commitment.</p>
-      <p><strong>Why commitment is the natural baseline.</strong> The empirical literature consistently documents that trade credit is concentrated in long-term repeated relationships (Cunat 2007, Antras and Foley 2015, Benguria et al. 2023). Commitment allows the supplier to offer better future terms when the constraint binds today&mdash;exactly the dynamic accommodation that relational contracts support.</p>
-      <p><strong>The MPE extension.</strong> We pair no-commitment with linear pricing (since TIOLI without commitment would trivially eliminate trade credit). The MPE is substantially more tractable: no need to track promised utility. All qualitative predictions survive&mdash;pecking order, credit multiplier, state-dependent amplification. The quantitative difference: the smoothing region is smaller, because committed suppliers can promise larger future surpluses.</p>
-      <div class="sugg-label">Paper action</div>
-      <p>Section 3.4 and Appendix: expand the 4-sentence summary to include (a) why TIOLI fails without commitment; (b) three-region result; (c) quantitative comparison of first-best region size; (d) table/figure comparing amplification elasticities across baseline and MPE.</p>
-    </div>
+  <div class="referee-quote">&ldquo;It is important to account for how ignoring commitment issues affects the model. Include an appendix discussing how results change.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Section 3.4 + appendix: MPE with linear pricing (TIOLI fails without commitment). Three regions survive, all qualitative predictions preserved. Smoothing region smaller without commitment.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We added Section 3.4 studying the model without commitment. Commitment is the natural baseline: empirical evidence documents that trade credit is concentrated in long-term relationships (Cunat 2007, Antras and Foley 2015). In the MPE with linear pricing, all qualitative predictions survive &mdash; pecking order, credit multiplier, state-dependent amplification. The quantitative difference is that the smoothing region is smaller without commitment, because committed suppliers can promise larger future surpluses.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t29">
   <div class="card-header">
     <input type="checkbox" id="t29" onchange="persist('t29')">
-    <span class="card-title" id="title-t29">Two-way trade credit discussion</span>
+    <span class="card-title" id="title-t29">Two-way trade credit</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>&ldquo;Beef up a little the discussion in section 2&rdquo;&mdash;one-line stub</li>
-    <li>Comment 3: model assumes one-directional TC, but some services (Netflix, etc.) are paid upfront</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R2.tex:195</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Letter text</div>
-      <p>We agree that trade credit does not always flow in a single direction. The prepayment pattern the referee describes is concentrated in consumer-facing services, not in the upstream supplier&ndash;customer B2B relationships our model captures. In our data (Italian Orbis, 54 sectors), accounts payable (supplier&rarr;customer credit) substantially exceeds accounts receivable in nearly all sectors. Garcia-Marin et al. (2019) document that larger markups are associated with more supplier&rarr;buyer credit&mdash;precisely the direction we model.</p>
-      <p>The parameter &pi;<sub>i</sub> (fraction of morning sales paid by households in the afternoon) already captures a form of delayed consumer payment. We added a footnote in Section 2 clarifying this assumption and noting that it would be straightforward to introduce time-to-build on the supplier side to generate two-way flows.</p>
-      <div class="sugg-label">Paper action</div>
-      <p>Expand footnote in Section 2.3 (line ~275) with 2&ndash;3 sentences addressing upfront payment in service sectors, citing Garcia-Marin et al. as supporting evidence, and referencing &pi;<sub>i</sub>.</p>
-    </div>
+  <div class="referee-quote">&ldquo;The model does not consider producers giving trade credit to suppliers. Many services are paid upfront.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Expand footnote in Section 2.3: upfront payment is concentrated in consumer-facing services, not B2B. Cite Garcia-Marin et al. (2019). Note that &pi;<sub>i</sub> already captures delayed consumer payment.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We agree that trade credit does not always flow in a single direction. The prepayment pattern is concentrated in consumer-facing services (Netflix, telecom), not the B2B supply chains our model targets. In our data, accounts payable (supplier&rarr;customer) substantially exceeds accounts receivable in nearly all sectors. Garcia-Marin et al. (2019) confirm the supplier&rarr;buyer direction is dominant in manufacturing and wholesale. The parameter &pi;<sub>i</sub> already captures a form of delayed consumer payment. We have expanded this discussion in Section 2.</p></div>
   </details>
 </div>
 
@@ -989,180 +879,115 @@
     <span class="card-title" id="title-t30">International evidence on invoice discounting</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>&ldquo;INSERT SOMETHING ABOUT OTHER COUNTRIES&rdquo; in factoring response (Comment 8)</li>
-    <li>Italian evidence is thorough; need to add US, UK, and other country data</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R2.tex:313</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Letter text</div>
-      <p>&ldquo;This pattern is not specific to Italy. In the United States, Caglio, Darst, and Kalemli-Ozcan (2021) find that roughly one-third of all short-term bank loans to US firms are backed by accounts receivables and inventories&mdash;comparable to our Italian estimate of approximately 40% for advances backed by receivables alone. Importantly, the dominant form of AR-backed lending in the US is also asset-based lending with recourse, where the borrower retains credit risk. Factoring without recourse represents a small minority of total factoring volume (typically 10&ndash;15% per industry associations). Similar patterns are documented for the UK, where invoice discounting (with recourse) accounts for roughly 80% of total invoice finance outstanding (UK Finance data). These cross-country patterns reinforce our finding: the predominant mechanism for converting receivables into liquidity is discounting with recourse&mdash;consistent with our model&rsquo;s prediction that credit risk remains with the supplier.&rdquo;</p>
-      <div class="sugg-label">Paper action</div>
-      <p>Expand the existing Caglio et al. footnote (manuscript line 770) to note AR-backed lending with recourse is dominant in the US as well. Keep the manuscript treatment to 2 sentences; the fuller discussion belongs in the letter.</p>
-    </div>
+  <div class="referee-quote">&ldquo;The most common method of generating liquidity from trade credit is factoring, where firms do not retain ownership of the invoices.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Expand Caglio et al. footnote (manuscript line 770) with US (~1/3 of loans backed by AR) and UK (invoice discounting with recourse = ~80% of invoice finance) evidence.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>This pattern is not specific to Italy. Caglio, Darst, and Kalemli-Ozcan (2021) find that roughly one-third of US short-term bank loans are backed by AR and inventories. In the UK, invoice discounting with recourse accounts for approximately 80% of total invoice finance (UK Finance data). These cross-country patterns reinforce our finding: firms predominantly convert receivables into liquidity through discounting with recourse, consistent with our model&rsquo;s prediction that credit risk remains with the supplier.</p></div>
   </details>
 </div>
 
 <div class="card low" id="task-t31">
   <div class="card-header">
     <input type="checkbox" id="t31" onchange="persist('t31')">
-    <span class="card-title" id="title-t31">BDS factoring table number placeholder</span>
+    <span class="card-title" id="title-t31">BDS factoring table number</span>
     <span class="tag low">low</span>
   </div>
-  <ul>
-    <li>&ldquo;Table TBD30315&rdquo;&mdash;needs to be replaced with actual BDS table identifier for factoring by type</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R2.tex:305</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>Look up the correct BDS table in the Bank of Italy portal (sezione &lsquo;intermediari finanziari&rsquo;) for factoring outstanding by type (pro-soluto / pro-solvendo) starting 2008. Replace &ldquo;TBD30315&rdquo; in the letter and cross-check manuscript line 768 to ensure TRI30101 and TFR20281 are correct and this factoring-by-type table is cited separately if distinct.</p>
-    </div>
+  <div class="referee-quote">(Internal: &ldquo;Table TBD30315&rdquo; placeholder in letter draft.)</div>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>Look up the correct BDS table for factoring by type (pro-soluto / pro-solvendo) at the Bank of Italy portal and replace the placeholder.</p></div>
   </details>
 </div>
 
-<!-- ================================================================== -->
-<div class="section-heading" id="sec-E">E. Letter to R3 (<code>Letter_to_R3.tex</code>)</div>
-<!-- ================================================================== -->
+<div class="section-heading" id="sec-E">Letter to R3</div>
 
 <div class="card high" id="task-t32">
   <div class="card-header">
     <input type="checkbox" id="t32" onchange="persist('t32')">
-    <span class="card-title" id="title-t32">Missing citation for &sigma;=4.8</span>
+    <span class="card-title" id="title-t32">Citation for &sigma;=4.8</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>&ldquo;following novel evidence from XX&rdquo;&mdash;needs the Baqaee et al. (2023) reference confirmed</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R3.tex:379</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <p>The manuscript already references <code>\citealt{baqaee2023consumer}</code>. Check the .bib file to confirm: likely Baqaee, Farhi, and Sangani (2023), &ldquo;The Supply-Side Effects of Monetary Policy&rdquo; or &ldquo;Consumer Surplus of Trade and Trade Policy.&rdquo; Verify the co-authors and exact title, then replace &ldquo;XX&rdquo; with the spelled-out citation matching the .bib key.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Could you please report profits to sales ratios in the model and in the data?&rdquo;</div>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>Replace &ldquo;following novel evidence from XX&rdquo; with the correct Baqaee et al. (2023) reference. Verify the <code>.bib</code> key matches <code>\citealt{baqaee2023consumer}</code> used in the manuscript.</p></div>
   </details>
 </div>
 
 <div class="card low" id="task-t33">
   <div class="card-header">
     <input type="checkbox" id="t33" onchange="persist('t33')">
-    <span class="card-title" id="title-t33">Appendix: material expenditures vs. I-O table comparison</span>
+    <span class="card-title" id="title-t33">Material expenditures vs. I-O table</span>
     <span class="tag low">low</span>
   </div>
-  <ul>
-    <li>R3 minor comment: compare constructed material expenditures to Italian I-O table</li>
-    <li>Response is stub: &ldquo;ok, we could do this&rdquo;</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R3.tex:423</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Letter text</div>
-      <p>&ldquo;We thank the referee for this suggestion. We added Appendix [X] comparing our constructed material expenditure shares, aggregated to two-digit sectors, against the Italian input-output table (ISTAT). The two series are closely aligned: the cross-sector correlation is [X] and the mean absolute deviation is [X] percentage points. The largest discrepancies arise in sectors with thinner Orbis coverage.&rdquo;</p>
-      <div class="sugg-label">Paper action</div>
-      <p>Add short appendix (1&ndash;2 pages) with a scatter plot (constructed vs. I-O) and report the correlation and MAD.</p>
-    </div>
+  <div class="referee-quote">&ldquo;It would be good to compare the constructed material expenditures with those reported in the I-O table.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add short appendix: aggregate Orbis material shares to 2-digit NACE, compare to Italian I-O table. Include scatter plot and correlation.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We added Appendix [X] comparing our constructed material expenditure shares to the Italian I-O table. The cross-sector correlation is [X] and the mean absolute deviation is [X] percentage points. The largest discrepancies arise in sectors with thinner Orbis coverage.</p></div>
   </details>
 </div>
 
 <div class="card low" id="task-t34">
   <div class="card-header">
     <input type="checkbox" id="t34" onchange="persist('t34')">
-    <span class="card-title" id="title-t34">Improve quantification section exposition</span>
+    <span class="card-title" id="title-t34">Quantification exposition</span>
     <span class="tag low">low</span>
   </div>
-  <ul>
-    <li>R3: &ldquo;the quantification part is somewhat less clear and can be improved&rdquo;</li>
-    <li>Response is stub: &ldquo;Ok, answering 2.4 should go a long way&rdquo;</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R3.tex:429</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Letter text</div>
-      <p>&ldquo;We agree with this assessment and have revised the quantification section to improve clarity. Specifically, we (i) added a roadmap paragraph distinguishing the three calibration steps and identifying which moments pin down which parameters; (ii) separated externally set parameters (with citations) from internally calibrated ones; and (iii) expanded the explanation of how the three new calibration targets&mdash;markups, share of bank credit backed by receivables, and the decline in trade credit during the Great Recession&mdash;jointly discipline the model.&rdquo;</p>
-      <div class="sugg-label">Paper action</div>
-      <p>Consider adding a calibration summary table: parameter | value | target moment | source/method.</p>
-    </div>
+  <div class="referee-quote">&ldquo;The exposition of the theory is very clear; in the quantification part it is somewhat less clear.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add roadmap paragraph at start of Section 5. Separate external vs. internal parameters. Explain how each target disciplines a specific parameter.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>We revised the quantification section to improve clarity: (i) added a roadmap distinguishing calibration steps; (ii) separated externally set parameters from internally calibrated ones; (iii) expanded the explanation of how the three new targets jointly discipline the model.</p></div>
   </details>
 </div>
 
-<!-- ================================================================== -->
-<div class="section-heading" id="sec-F">F. Letter to R4 (<code>Letter_to_R4.tex</code>)</div>
-<!-- ================================================================== -->
+<div class="section-heading" id="sec-F">Letter to R4</div>
 
 <div class="card high" id="task-t35">
   <div class="card-header">
     <input type="checkbox" id="t35" onchange="persist('t35')">
-    <span class="card-title" id="title-t35">R4&rsquo;s three conditions for AER publication (a/b/c)</span>
+    <span class="card-title" id="title-t35">Three conditions for AER (a/b/c)</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>This is the <strong>most critical response</strong>&mdash;R4 sets explicit conditions (a) micro-foundations change answers, (b) new moments/counterfactuals, (c) granular micro-data</li>
-    <li>Current state: (a) one unfinished sentence, (b) raw internal notes, (c) not addressed</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R4.tex:174&ndash;179</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Condition (a): micro-foundations change the sign</div>
-      <p>The existing reduced-form literature reaches contradictory conclusions: Shao (2025) finds amplification, Reischer (2024) finds smoothing. These opposite predictions reflect different assumptions about the trade credit limit, not calibration. Our micro-foundation derives the constraint from limited commitment: it generates a state-dependent response&mdash;smoothing when suppliers are unconstrained, amplification when they are constrained. The direction is an endogenous prediction. Our calibration places Italy in the amplification region, generating the 2&times; result. No reduced-form model can make this determination from first principles.</p>
-      <div class="sugg-label">Condition (b): new moments and counterfactuals</div>
-      <p>Because the constraint is forward-looking, current trade credit responds to changes in expectations. Section 3.3.4 shows that buyer credit tightening reduces trade credit even when suppliers are unaffected&mdash;because J falls. This channel is absent from static frameworks. The micro-foundation also generates a novel policy implication (Section 5.4): subsidies to suppliers can be more effective than subsidies to customers, because customer subsidies weaken repayment incentives. This cannot arise with reduced-form constraints.</p>
-      <div class="sugg-label">Condition (c): granular micro-data</div>
-      <p>We do not have firm-to-firm trade credit microdata. We acknowledge this honestly: our calibration relies on aggregate sectoral moments from Orbis and the Bank of Italy, and we validate against cross-sectoral predictions. Bringing firm-to-firm data to bear on a model of this kind remains an important open problem.</p>
-      <div class="sugg-label">Paper action</div>
-      <p>For (a): ensure the Shao-vs-Reischer contrast is prominent in the introduction and quantitative section. For (b): frame the beta-shock and two-theta sections as exploiting the dynamic nature of the micro-foundation. For (c): add a brief limitations paragraph at the end of the quantitative section.</p>
-    </div>
+  <div class="referee-quote">&ldquo;One would need to show (a) that micro-founding changes quantitative answers, (b) that it rationalizes new moments or counterfactuals, or (c) brings granular micro-data.&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>(a) Make the Shao-vs-Reischer contrast prominent in the introduction and Section 5 &mdash; micro-founding determines the sign. (b) Frame beta-shock and two-theta extensions as exploiting the dynamic micro-foundation; highlight the supplier-vs-customer subsidy counterfactual. (c) Add a brief limitations paragraph.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p><strong>Condition (a):</strong> The existing literature reaches opposite conclusions &mdash; Shao (2025) finds amplification, Reischer (2024) finds smoothing. Our micro-foundation resolves this by deriving the constraint from limited commitment, endogenously determining the sign. <strong>Condition (b):</strong> The forward-looking constraint generates dynamics absent from static frameworks: the beta-shock extension shows how expectations transmit shocks, and the two-theta extension isolates how relationship value propagates buyer distress to suppliers. Our framework also delivers a novel policy result: supplier subsidies dominate customer subsidies because the latter weaken repayment incentives. <strong>Condition (c):</strong> We do not have firm-to-firm microdata. We acknowledge this honestly and position the cross-sectoral validation exercise as the available substitute. Bringing granular data to bear on a GE model of this kind remains an important open question.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t36">
   <div class="card-header">
     <input type="checkbox" id="t36" onchange="persist('t36')">
-    <span class="card-title" id="title-t36">Supply chain mapping and two-layer model structure</span>
+    <span class="card-title" id="title-t36">Supply chain mapping and two-layer structure</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Response is raw internal notes: &ldquo;i) explain better how the mapping is done; ii) argue that&hellip;&rdquo;</li>
-    <li>R4 questions: no real supply chain (just buyer&ndash;seller), mapping unclear since most firms sell both intermediates and final goods</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R4.tex:225</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Letter text</div>
-      <p><strong>On model structure:</strong> The two-layer setup is not meant to capture a literal sequential chain. It is the minimal structure needed to generate an endogenous trade credit relationship between a buyer and seller who transact repeatedly. A single-sector model would lose the cross-sectoral variation used for validation.</p>
-      <p><strong>On data mapping:</strong> We classify firms by primary NACE code and split revenue into intermediate and final components using Italian I-O table shares. This is imperfect but well-defined and standard. Crucially, any model mapping multi-product firms to a sectoral GE framework must make an analogous assignment&mdash;and a reduced-form model would have fewer moments (no trade credit moments) to discipline the split.</p>
-      <div class="sugg-label">Paper action</div>
-      <p>Add a paragraph to the data section explaining: (1) the two-layer structure is minimal for generating bilateral relationship value; (2) the precise formula for the intermediate/final revenue split using I-O shares; (3) robustness to perturbation of I-O shares.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Suppliers do not themselves obtain trade credit from their own suppliers&hellip; there&rsquo;s no real supply chain. How do you map data to model?&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add paragraph to data section: (1) two-layer is minimal for generating bilateral relationship value; (2) firms classified by NACE, revenue split uses I-O shares; (3) any GE model faces the same mapping challenge with fewer moments to discipline it.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>The two-layer setup is not meant to capture a literal sequential chain. It is the minimal structure needed to generate an endogenous trade credit relationship between a buyer and seller who transact repeatedly. We classify firms by primary NACE code and split revenue into intermediate and final components using I-O shares. This is the same approach used in comparable multi-sector models, and a reduced-form model would face the identical mapping problem with fewer moments to discipline it. We have revised Section [X] to make this logic explicit.</p></div>
   </details>
 </div>
 
 <div class="card high" id="task-t37">
   <div class="card-header">
     <input type="checkbox" id="t37" onchange="persist('t37')">
-    <span class="card-title" id="title-t37">Defending Italy Orbis coverage</span>
+    <span class="card-title" id="title-t37">Defend Italy Orbis coverage</span>
     <span class="tag high">high</span>
   </div>
-  <ul>
-    <li>Response is stub: &ldquo;Check the paper, for our years italy might be fine&rdquo;</li>
-    <li>R4 cites OECD Working Papers: Italy &ldquo;at best middling&rdquo; in Orbis coverage</li>
-  </ul>
-  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R4.tex:231</code></div>
-  <details>
-    <summary>+ Claude suggestion</summary>
-    <div class="suggestion-body">
-      <div class="sugg-label">Letter text</div>
-      <p>The OECD assessment of &ldquo;middling&rdquo; coverage (Bajgar et al., 2020) pools all firm sizes and years. Two qualifications matter for our application:</p>
-      <p><strong>Coverage is strong for our sample period and firm size.</strong> For Italian firms with more than [X] employees, Orbis captures approximately [X]% of total sales as reported in ISTAT. Our balanced panel includes 300,000+ firms across 58 sectors.</p>
-      <p><strong>Italy is not an arbitrary choice.</strong> The Bank of Italy&rsquo;s Survey on Industrial and Service Firms provides an independent cross-check on Orbis and&mdash;critically&mdash;direct data on trade credit volumes and the instruments for discounting receivables (<em>rischi autoliquidanti</em>). This institutional detail is not available for countries with nominally better Orbis coverage. The joint availability of Orbis and the Bank of Italy data is what makes Italy the appropriate setting.</p>
-      <div class="sugg-label">Paper action</div>
-      <p>Add to data section: (1) Orbis coverage statistics for Italy by year and firm-size class; (2) cite the OECD paper, acknowledge the finding, then explain why large-firm coverage + BdI survey make Italy appropriate. (3) Verify coverage stats are computed.</p>
-    </div>
+  <div class="referee-quote">&ldquo;Italy is at best middling in Orbis firm coverage. Is there any particular reason to go for Italy?&rdquo;</div>
+  <details><summary>+ Manuscript suggestion</summary>
+    <div class="suggestion-body manuscript"><p>Add coverage statistics by year and firm-size class to data section. Cite OECD Working Paper (Bajgar et al. 2020), acknowledge, then explain why Italy is appropriate despite middling overall coverage.</p></div>
+  </details>
+  <details><summary>+ Letter suggestion</summary>
+    <div class="suggestion-body letter"><p>The OECD assessment pools all firm sizes and years. For 2005&ndash;2015 and medium-to-large firms, Italy&rsquo;s coverage is strong &mdash; our balanced panel includes over 300,000 firms. Italy is not an arbitrary choice: the Bank of Italy provides detailed data on invoice-discounting instruments (rischi autoliquidanti) that allows us to construct the share of bank credit backed by receivables, a key calibration target unavailable in other Orbis countries. We have added a paragraph documenting coverage statistics in the data section.</p></div>
   </details>
 </div>
 
@@ -1176,13 +1001,12 @@
 
     <label for="newSection">Category</label>
     <select id="newSection">
-      <option value="sec-A">A. Manuscript</option>
-      <option value="sec-A2">A2. Appendix Gaps</option>
-      <option value="sec-B">B. Letter to Editor</option>
-      <option value="sec-C">C. Letter to R1</option>
-      <option value="sec-D">D. Letter to R2</option>
-      <option value="sec-E">E. Letter to R3</option>
-      <option value="sec-F">F. Letter to R4</option>
+      <option value="sec-A">Manuscript</option>
+      <option value="sec-B">Letter to Editor</option>
+      <option value="sec-C">Letter to R1</option>
+      <option value="sec-D">Letter to R2</option>
+      <option value="sec-E">Letter to R3</option>
+      <option value="sec-F">Letter to R4</option>
     </select>
 
     <label for="newTitle">Title</label>
