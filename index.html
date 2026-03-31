@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Credit Paper &mdash; Revision To-Dos</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f7f7f8; color: #222; margin: 40px; line-height: 1.5; }
+  h1 { font-size: 1.6em; margin-bottom: 6px; }
+  .subtitle { color: #666; font-size: 0.95em; margin-bottom: 24px; }
+  .legend { display: flex; gap: 18px; margin-bottom: 28px; font-size: 0.85em; align-items: center; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 3px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+  .legend-dot.high { background: #e74c3c; }
+  .legend-dot.low { background: #f0c040; }
+  .legend-dot.done-dot { background: #d4edda; border: 1px solid #a3d9a5; }
+
+  .section-heading { font-size: 1.15em; font-weight: 700; margin: 32px 0 14px 0; padding-bottom: 6px; border-bottom: 2px solid #ddd; }
+
+  .card { background: #fff; border-radius: 6px; padding: 14px 18px; margin-bottom: 10px; border-left: 5px solid #ccc; }
+  .card.high { border-left-color: #e74c3c; }
+  .card.low  { border-left-color: #f0c040; }
+  .card.done { background: #eafbe7; }
+
+  .card-header { display: flex; align-items: flex-start; gap: 10px; }
+  .card-header input[type="checkbox"] { margin-top: 4px; transform: scale(1.15); accent-color: #27ae60; cursor: pointer; }
+  .card-title { font-weight: 600; font-size: 0.95em; flex: 1; }
+  .card-title.checked-title { text-decoration: line-through; color: #888; }
+  .tag { font-size: 0.7em; padding: 2px 7px; border-radius: 3px; font-weight: 600; text-transform: uppercase; white-space: nowrap; }
+  .tag.high { background: #fdecea; color: #c0392b; }
+  .tag.low  { background: #fef9e7; color: #b7950b; }
+
+  .card ul { margin: 8px 0 0 32px; font-size: 0.88em; color: #444; }
+  .card ul li { margin-bottom: 3px; }
+  code { background: #f0f0f0; padding: 1px 5px; border-radius: 3px; font-size: 0.9em; }
+
+  .file-box { background: #f5f5f5; border-radius: 4px; padding: 6px 12px; margin: 8px 0 0 32px; font-size: 0.82em; color: #666; }
+  .file-box strong { font-size: 0.85em; text-transform: uppercase; color: #888; }
+
+  details { margin: 10px 0 0 32px; }
+  summary { cursor: pointer; font-size: 0.88em; font-weight: 600; color: #2c3e50; padding: 6px 0; }
+  summary:hover { color: #e74c3c; }
+  .suggestion-body { background: #f9f6ff; border-left: 3px solid #8e44ad; padding: 12px 16px; margin-top: 6px; border-radius: 0 4px 4px 0; font-size: 0.85em; line-height: 1.6; color: #333; }
+  .suggestion-body p { margin-bottom: 10px; }
+  .suggestion-body p:last-child { margin-bottom: 0; }
+  .suggestion-body em { color: #555; }
+  .suggestion-body strong { color: #2c3e50; }
+  .sugg-label { font-size: 0.75em; text-transform: uppercase; font-weight: 700; color: #8e44ad; letter-spacing: 0.5px; margin-bottom: 4px; }
+
+  /* ---- Counter dashboard ---- */
+  .dashboard {
+    position: fixed;
+    top: 28px;
+    right: 32px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+  }
+  .dash-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 6px 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+    font-size: 0.82em;
+    font-weight: 600;
+    transition: transform 0.15s;
+  }
+  .dash-pill:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.13); }
+  .dash-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    font-weight: 700;
+    color: #fff;
+    padding: 0 6px;
+  }
+  .dash-num.high-bg { background: #e74c3c; }
+  .dash-num.low-bg  { background: #f0c040; color: #6b5900; }
+  .dash-num.done-bg { background: #27ae60; }
+  .dash-label { color: #555; }
+
+  .progress-bar-wrap {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: #e0e0e0;
+    z-index: 101;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #27ae60, #2ecc71);
+    width: 0%;
+    transition: width 0.4s ease;
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* ---- Add-task button ---- */
+  .fab {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8e44ad, #9b59b6);
+    color: #fff;
+    border: none;
+    font-size: 1.6em;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(142,68,173,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s, box-shadow 0.15s;
+    z-index: 200;
+  }
+  .fab:hover { transform: scale(1.08); box-shadow: 0 6px 22px rgba(142,68,173,0.45); }
+
+  /* ---- Modal ---- */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px 32px;
+    width: 440px;
+    max-width: 92vw;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    animation: modalIn 0.2s ease;
+  }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .modal h2 { font-size: 1.1em; margin-bottom: 18px; color: #2c3e50; }
+  .modal label { font-size: 0.82em; font-weight: 600; color: #555; display: block; margin-bottom: 4px; margin-top: 14px; }
+  .modal select, .modal input[type="text"], .modal textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid #ddd;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.9em;
+    transition: border-color 0.15s;
+  }
+  .modal select:focus, .modal input[type="text"]:focus, .modal textarea:focus { outline: none; border-color: #8e44ad; }
+  .modal textarea { resize: vertical; min-height: 60px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; }
+  .modal-actions button {
+    padding: 8px 20px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    font-size: 0.88em;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-cancel { background: #f0f0f0; color: #555; }
+  .btn-cancel:hover { background: #e0e0e0; }
+  .btn-add { background: linear-gradient(135deg, #8e44ad, #9b59b6); color: #fff; }
+  .btn-add:hover { background: linear-gradient(135deg, #7d3c98, #8e44ad); }
+  .radio-row { display: flex; gap: 16px; margin-top: 4px; }
+  .radio-row label { display: flex; align-items: center; gap: 5px; margin: 0; font-weight: 500; cursor: pointer; }
+  .radio-row input[type="radio"] { accent-color: #8e44ad; }
+
+  /* ---- Card action buttons ---- */
+  .card-actions { display: flex; gap: 4px; margin-left: 6px; flex-shrink: 0; }
+  .card-actions button {
+    background: none; border: 1px solid transparent; border-radius: 4px;
+    cursor: pointer; padding: 2px 5px; font-size: 0.78em; color: #aaa;
+    transition: all 0.15s; line-height: 1;
+  }
+  .card-actions button:hover { color: #555; background: #f0f0f0; border-color: #ddd; }
+  .card-actions .act-edit:hover { color: #2980b9; }
+  .card-actions .act-comment:hover { color: #8e44ad; }
+  .comment-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #8e44ad; color: #fff; border-radius: 8px;
+    min-width: 15px; height: 15px; font-size: 0.65em; font-weight: 700;
+    padding: 0 4px; margin-left: 2px; vertical-align: middle;
+  }
+
+  /* ---- Comment thread ---- */
+  .comment-thread { margin: 10px 0 0 32px; display: none; }
+  .comment-thread.open { display: block; }
+  .comment-item {
+    background: #fafafa; border-left: 3px solid #ddd; padding: 8px 12px;
+    margin-bottom: 6px; border-radius: 0 4px 4px 0; font-size: 0.82em;
+    position: relative;
+  }
+  .comment-item .cm-meta { font-size: 0.8em; color: #999; margin-bottom: 2px; }
+  .comment-item .cm-meta strong { color: #555; }
+  .comment-item .cm-delete {
+    position: absolute; top: 6px; right: 8px;
+    background: none; border: none; color: #ccc; cursor: pointer;
+    font-size: 0.9em; padding: 0 3px; transition: color 0.15s;
+  }
+  .comment-item .cm-delete:hover { color: #e74c3c; }
+
+  /* ---- Card delete button ---- */
+  .card-actions .act-delete { }
+  .card-actions .act-delete:hover { color: #e74c3c; }
+
+  /* ---- Confirm overlay ---- */
+  .confirm-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.35); z-index: 400;
+    align-items: center; justify-content: center;
+  }
+  .confirm-overlay.open { display: flex; }
+  .confirm-box {
+    background: #fff; border-radius: 10px; padding: 24px 28px;
+    width: 360px; max-width: 90vw;
+    box-shadow: 0 10px 36px rgba(0,0,0,0.18);
+    text-align: center; animation: modalIn 0.15s ease;
+  }
+  .confirm-box p { font-size: 0.95em; margin-bottom: 18px; color: #333; }
+  .confirm-actions { display: flex; gap: 10px; justify-content: center; }
+  .confirm-actions button {
+    padding: 8px 22px; border-radius: 6px; border: none;
+    font-weight: 600; font-size: 0.88em; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-confirm-cancel { background: #f0f0f0; color: #555; }
+  .btn-confirm-cancel:hover { background: #e0e0e0; }
+  .btn-confirm-delete { background: #e74c3c; color: #fff; }
+  .btn-confirm-delete:hover { background: #c0392b; }
+  .comment-input-row {
+    display: flex; gap: 8px; margin-top: 6px;
+  }
+  .comment-input-row input, .comment-input-row textarea {
+    font-family: inherit; font-size: 0.85em; padding: 6px 10px;
+    border: 1.5px solid #ddd; border-radius: 5px; transition: border-color 0.15s;
+  }
+  .comment-input-row input:focus, .comment-input-row textarea:focus { outline: none; border-color: #8e44ad; }
+  .comment-input-row input { width: 110px; }
+  .comment-input-row textarea { flex: 1; resize: none; min-height: 32px; }
+  .comment-input-row button {
+    background: #8e44ad; color: #fff; border: none; border-radius: 5px;
+    padding: 6px 14px; font-weight: 600; font-size: 0.82em; cursor: pointer;
+    white-space: nowrap; transition: background 0.15s;
+  }
+  .comment-input-row button:hover { background: #7d3c98; }
+  /* ---- Sync indicator ---- */
+  .sync-dot {
+    width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+    margin-right: 5px; vertical-align: middle;
+  }
+  .sync-dot.online { background: #27ae60; }
+  .sync-dot.offline { background: #e74c3c; }
+</style>
+<!-- Firebase SDK (compat, small) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+  firebase.initializeApp({
+    databaseURL: "https://trade-credit-default-rtdb.firebaseio.com"
+  });
+  var db = firebase.database();
+  var DB_ROOT = 'tc_revision_a8f3c9e2';
+</script>
+</head>
+<body>
+
+<div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
+
+<div class="dashboard">
+  <div class="dash-pill" title="Firebase sync status">
+    <span class="sync-dot" id="syncDot"></span>
+    <span class="dash-label" id="syncLabel">connecting</span>
+  </div>
+  <div class="dash-pill">
+    <span class="dash-num high-bg" id="countHigh">0</span>
+    <span class="dash-label">High</span>
+  </div>
+  <div class="dash-pill">
+    <span class="dash-num low-bg" id="countLow">0</span>
+    <span class="dash-label">Low</span>
+  </div>
+  <div class="dash-pill">
+    <span class="dash-num done-bg" id="countDone">0</span>
+    <span class="dash-label">Done</span>
+  </div>
+</div>
+
+<h1>Trade Credit Paper &mdash; Revision To-Dos</h1>
+<p class="subtitle">Macroeconomics of Trade Credit &mdash; R&amp;R at AER &mdash; Generated 2026-03-24</p>
+
+<div class="legend">
+  <span><span class="legend-dot high"></span> High priority</span>
+  <span><span class="legend-dot low"></span> Low priority</span>
+  <span><span class="legend-dot done-dot"></span> Completed</span>
+</div>
+
+<!-- ================================================================== -->
+<div class="section-heading" id="sec-A">A. Manuscript (<code>manuscript_2025.tex</code>)</div>
+<!-- ================================================================== -->
+
+<div class="card high" id="task-t1">
+  <div class="card-header">
+    <input type="checkbox" id="t1" onchange="persist('t1')">
+    <span class="card-title" id="title-t1">Types of self-liquidating financial instruments (<em>rischi auto-liquidanti</em>)</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Red placeholder footnote <code>{\red explain the different types}</code> has no actual content</li>
+    <li>The Letter to R2 (lines 301&ndash;315) contains the full taxonomy and magnitudes&mdash;never inserted into manuscript</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>manuscript_2025.tex:768</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Suggested footnote text</div>
+      <p>Replace the red placeholder with:</p>
+      <p>&ldquo;The main instruments are: (i) <em>factoring without recourse</em> (<em>pro-soluto</em>), in which a factor (e.g., a bank) purchases the invoice outright and absorbs the risk of non-payment by the debtor; (ii) <em>factoring with recourse</em> (<em>pro-solvendo</em>), in which the receivable is temporarily assigned to the factor but the seller retains ultimate liability if the debtor defaults; and (iii) <em>advances on invoices</em> (<em>anticipi su fatture</em>), the most common form, in which the bank provides liquidity against the invoice without any transfer of ownership. To get a sense of the magnitudes, in June 2011 the outstanding stock of factoring credit was roughly 35 billion euros (15 billion pro-soluto and 20 billion pro-solvendo), while total rischi auto-liquidanti stood at 183 billion euros. Factoring without recourse thus represented approximately 10% of the overall liquidity that banks extended to firms against their accounts receivable, confirming that the vast majority of these transactions do not involve a transfer of invoice ownership to the bank.&rdquo;</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t2">
+  <div class="card-header">
+    <input type="checkbox" id="t2" onchange="persist('t2')">
+    <span class="card-title" id="title-t2">Average quarterly stock of invoice discounting and short-term bank credit</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Two numerical placeholders <strong>XX</strong> and <strong>YY</strong> unfilled: average quarterly outstanding of self-liquidating risks net of household loans, and total short-term NFC credit, over 2010q1&ndash;2019q4</li>
+    <li>Data must come from Bank of Italy BDS Tables TRI30101 and TFR20281</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>manuscript_2025.tex:770</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Data task &mdash; cannot compute without BDS access</div>
+      <p>I do not have access to the Bank of Italy BDS portal. The authors should: (1) download Table TRI30101 (total rischi auto-liquidanti) and Table TFR20281 (household cessione del quinto component); (2) subtract the latter from the former to isolate the NFC invoice-discounting series; (3) average over 2010q1&ndash;2019q4 for XX; (4) do the same with the short-term NFC credit series for YY.</p>
+      <p>Also fix a minor grammatical issue: &ldquo;was averaged YY a quarter&rdquo; should read &ldquo;averaged [YY] billion euros per quarter.&rdquo;</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t3">
+  <div class="card-header">
+    <input type="checkbox" id="t3" onchange="persist('t3')">
+    <span class="card-title" id="title-t3">Finalize model-fit footnote and delete credit-allocation paragraph</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>(a) Footnote comparing model&rsquo;s 33% invoice-backed share to Italian 40% and US 30% (Caglio et al.) is still in <code>\textcolor{red}</code>&mdash;needs to be confirmed and de-colored</li>
+    <li>(b) Entire paragraph on credit allocation to wages still in red&mdash;must be <strong>deleted</strong> per agreement with R3 (fraction of bank credit going to wages is indeterminate)</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>manuscript_2025.tex:962&ndash;964</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Two actions</div>
+      <p><strong>(a)</strong> If the 40% figure is confirmed against the BDS data, simply remove the <code>\textcolor{red}{...}</code> wrapper. The footnote text is well-written and needs no other edits.</p>
+      <p><strong>(b)</strong> Delete the entire paragraph beginning &ldquo;Aside from increasing its quantity&hellip;&rdquo; on line 964. The surrounding text connects cleanly: line 962 ends the credit-quantity comparison, and line 967 begins the second counterfactual.</p>
+    </div>
+  </details>
+</div>
+
+<!-- ================================================================== -->
+<div class="section-heading" id="sec-A2">A2. Appendix Gaps (<code>manuscript_2025.tex</code>)</div>
+<!-- ================================================================== -->
+
+<div class="card high" id="task-t38">
+  <div class="card-header">
+    <input type="checkbox" id="t38" onchange="persist('t38')">
+    <span class="card-title" id="title-t38">MPE extension appendix not included in manuscript (broken reference)</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Main text line 522 references <code>\ref{app:MPE}</code> but <code>\label{app:MPE}</code> does not exist in the manuscript</li>
+    <li>A full draft exists at <code>Claude_drafts/Appendix_Extensions.tex</code> (MPE with linear pricing + two-theta formal analysis) but is never <code>\input</code>'d</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>manuscript_2025.tex:522</code> references it; <code>Claude_drafts/Appendix_Extensions.tex</code> has the draft</div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Action</div>
+      <p>Add <code>\input{Claude_drafts/Appendix_Extensions}</code> after the existing appendix sections (after line ~1982, or after the Numerical Algorithm section). This file contains two subsections: (1) <code>app:MPE</code> &mdash; the customer&rsquo;s problem, supplier&rsquo;s Bellman equation, and characterization of the three regions in the MPE; and (2) <code>app:two_thetas</code> &mdash; the heterogeneous-friction extension.</p>
+      <p>Before including, review the draft for consistency with the current main text: verify notation matches (e.g., that the revenue function uses the same arguments), and confirm the propositions/results align with what Section 3.3 now claims. The draft was written as a companion to &ldquo;Section 3.4&rdquo; but the main text now labels extensions as Section 3.3&mdash;update the cross-references.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t39">
+  <div class="card-header">
+    <input type="checkbox" id="t39" onchange="persist('t39')">
+    <span class="card-title" id="title-t39">Solution accuracy measures (Den Haan 2010) not yet in manuscript</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Response to R2 Comment 9 promises to report Den Haan (2010) accuracy measures in a footnote and appendix details</li>
+    <li>Neither &ldquo;Den Haan&rdquo; nor &ldquo;accuracy&rdquo; appear anywhere in <code>manuscript_2025.tex</code></li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> Should go in <code>manuscript_2025.tex</code> Section 4 (near line 645) as a footnote, with details in Appendix A.4 (<code>app:numerical</code>, line 1577)</div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Footnote for main text (Section 4, around line 645)</div>
+      <p>&ldquo;We assess the accuracy of the approximate law of motion using the methodology of Den Haan (2010). Over a simulation of 5,000 periods, the maximum absolute error is 0.443% for wages and 0.441% for consumption; the average absolute error is 0.012% for both variables. These values indicate that the aggregate laws of motion are highly accurate. For comparison, Den Haan (2010) advocates for his method based on maximum (average) errors of 0.44% (0.12%) and 0.34% (0.12%).&rdquo;</p>
+      <div class="sugg-label">Appendix addition (app:numerical)</div>
+      <p>Add a subsection &ldquo;Accuracy of the Approximate Law of Motion&rdquo; to the Numerical Algorithm appendix. Report: (i) the Den Haan (2010) error metric formula; (ii) a table with max and average absolute errors for wages and consumption; (iii) the R&sup2; of the law of motion (already reported). Cite both <code>den2010solving</code> and <code>den2010comparison</code>.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t40">
+  <div class="card-header">
+    <input type="checkbox" id="t40" onchange="persist('t40')">
+    <span class="card-title" id="title-t40">Beta-shock extension appendix (if pursuing the &beta; shock)</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>The to-do file and <code>plans/section_3_4_revised.tex</code> reference <code>app:beta_shock</code> for the discount-factor shock analysis</li>
+    <li>This extension is needed to address R4 condition (b) (role of expectations / forward-looking constraint)</li>
+    <li>A draft appendix exists in <code>plans/section_3_4_revised.tex:124&ndash;230</code> but is not in the manuscript</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> Draft at <code>plans/section_3_4_revised.tex:124</code>; should be added to appendix after <code>app:MPE</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Decision required</div>
+      <p>This depends on whether you decide to include the &beta;-shock extension in the paper (currently listed as &ldquo;in progress&rdquo; in the to-do file and needed for R4 condition (b)). If included:</p>
+      <p><strong>Main text:</strong> Add a paragraph in Section 3.3 describing the &beta;-shock experiment: when &beta; falls, the trade credit constraint tightens immediately because the present value of the relationship drops. This is a channel absent from static frameworks. Show an IRF comparing trade credit economy vs. spot economy response.</p>
+      <p><strong>Appendix:</strong> Include the formal derivations from <code>plans/section_3_4_revised.tex:124&ndash;230</code> as a new appendix section <code>app:beta_shock</code>. Review for notation consistency with the current manuscript before including.</p>
+    </div>
+  </details>
+</div>
+
+<!-- ================================================================== -->
+<div class="section-heading" id="sec-B">B. Letter to Editor (<code>Letter_to_Editor.tex</code>)</div>
+<!-- ================================================================== -->
+
+<div class="card high" id="task-t4">
+  <div class="card-header">
+    <input type="checkbox" id="t4" onchange="persist('t4')">
+    <span class="card-title" id="title-t4">Importance of modeling assumptions (cover letter bullet 3)</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Item 3 in the opening summary says &ldquo;TBD&rdquo;&mdash;needs a 1&ndash;2 sentence summary parallel to items 1, 2, and 4</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:167</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Suggested text</div>
+      <p>We have <strong>expanded our discussion of modeling assumptions and studied their role for the paper&rsquo;s key results</strong>. We consider two extensions of the simplified model: a version with linear pricing and no commitment (Markov Perfect Equilibrium), and a version with heterogeneous borrowing constraints for upstream and downstream firms. In both cases the core mechanisms&mdash;the credit multiplier, the pecking order, and state-dependent amplification&mdash;are preserved, supporting the robustness of our main findings.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t5">
+  <div class="card-header">
+    <input type="checkbox" id="t5" onchange="persist('t5')">
+    <span class="card-title" id="title-t5">Financial networks literature paragraph</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Response to Editor 1d is &ldquo;TBD&rdquo;&mdash;needs a quoted paragraph connecting to Acemoglu et al. (2015), Elliott et al. (2014), Cabrales et al. (2017)</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:326</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">For the letter + paper lit review</div>
+      <p>We have added a paragraph in the literature review distinguishing our paper from the financial-networks literature. We copy it here:</p>
+      <p>&ldquo;Our framework also connects to the literature on financial networks, which studies how the structure of inter-firm financial linkages shapes the propagation of shocks (e.g., Acemoglu, Ozdaglar, and Tahbaz-Salehi, 2015; Elliott, Golub, and Jackson, 2014; Cabrales, Gottardi, and Vega-Redondo, 2017). That literature examines how losses cascade through networks of cross-holdings, interbank exposures, or contractual obligations, and how network topology&mdash;density, concentration, contagion thresholds&mdash;determines systemic fragility. Our paper differs along two dimensions. First, the linkages in our model are supply-chain relationships sustained by relational incentives rather than balance-sheet cross-exposures; default does not occur on the equilibrium path, so contagion does not operate through realized losses. Second, the amplification mechanism in our model is forward-looking: trade credit tightens when the present value of the supplier&ndash;buyer relationship falls, not when losses are realized. This generates propagation driven by expectations about future relationship values rather than by the network topology of existing obligations.&rdquo;</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t6">
+  <div class="card-header">
+    <input type="checkbox" id="t6" onchange="persist('t6')">
+    <span class="card-title" id="title-t6">De-emphasizing the credit multiplier</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Empty response to Editor 1e: Ben suggests foregrounding amplification over the credit multiplier</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:341</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>Thank you for this guidance. We have restructured the paper to lead with the amplification results. In the revised introduction, the credit multiplier is now presented as a mechanism that explains <em>why</em> the economy is more fragile with trade credit&mdash;because the discounting of receivables creates additional leverage in the supply chain&mdash;rather than as a headline result in its own right. The abstract and conclusion now foreground the finding that the economy with trade credit is twice as responsive to financial shocks as the spot economy, and the credit multiplier (which supports 16% more output in steady state) appears as the structural underpinning of that fragility. We believe retaining the credit multiplier is useful precisely because it makes the amplification finding interpretable: the same mechanism that expands credit in normal times also creates the leverage that amplifies shocks. That said, we agree with your framing and have reorganized the presentation accordingly.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t7">
+  <div class="card-header">
+    <input type="checkbox" id="t7" onchange="persist('t7')">
+    <span class="card-title" id="title-t7">Paper shortened to 35 pages</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Empty response to Editor 2: confirm the target was met and describe where cuts were made</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:361</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We have shortened the paper to 35 pages as requested. The main cuts were: (i) streamlined exposition of the model environment in Section 2, consolidating the discussion of financial markets and removing redundant steps; (ii) moved several derivations and technical details from the main text to the appendix; (iii) condensed the calibration discussion in Section 5.1 by removing extended motivation for individual parameter choices; (iv) removed the dynamic difference-in-differences analysis from the main text&mdash;our reasons for this are explained in detail below in response to your Comment 3. Consistent with your guidance, we retained the simplified model of Section 3 in the main text.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t8">
+  <div class="card-header">
+    <input type="checkbox" id="t8" onchange="persist('t8')">
+    <span class="card-title" id="title-t8">Removing the dynamic DiD figure</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Empty response to Editor 3: pre-trends in Figure 3(b), AER standards concern</li>
+    <li>Decision: remove figure, cite Costello (2020 JPE), add model validation table</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:376</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We have removed the dynamic difference-in-differences figure from the paper, following your guidance. We were not able to address R1&rsquo;s pre-trends concern in a way that meets AER standards, for two reasons. First, the Italian economy experienced two large financial shocks in close succession&mdash;the Great Recession (2008&ndash;2009) and the sovereign debt crisis (2011&ndash;2012)&mdash;making it difficult to isolate a clean post-treatment period. The absence of recovery after 2009 that R1 flags is, in our view, attributable to the sovereign debt crisis rather than a general downward trend, but we cannot credibly demonstrate this within the figure. Second, extending the pre-period is infeasible: the number of firms with consistent balance-sheet data in a balanced Orbis panel drops substantially before 2005, leaving too few observations for reliable sector-level averages.</p>
+      <p>In lieu of the figure, we have strengthened the quantitative section in two ways. We now cite Costello (2020, JPE) as direct empirical evidence of the mechanism at the heart of our model. In addition, we present a model validation exercise in Section 5 (Table 4) showing that the calibrated model matches&mdash;without targeting&mdash;the cross-sectoral patterns in the decline of trade credit and output during the Great Recession.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t9">
+  <div class="card-header">
+    <input type="checkbox" id="t9" onchange="persist('t9')">
+    <span class="card-title" id="title-t9">Revised calibration strategy and model fit</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Empty response to Editor 4: &ldquo;the amount of additional amplification needs to be carefully quantified&rdquo;</li>
+    <li>Covers R2 point 4, R3 point 2</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:394</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We have substantially revised the calibration strategy and expanded the analysis of model fit.</p>
+      <p><strong>Revised calibration.</strong> We dropped the dynamic DiD estimates from targets. We set &sigma; to an external estimate from Baqaee and Farhi (2023) rather than identifying it internally. We added two new targets: (i) the gross markup of downstream firms, which directly disciplines &gamma; and determines surplus division; and (ii) the share of short-term bank credit backed by accounts receivable (~40% in the Italian credit register), which disciplines the credit multiplier. We calibrate the shock process by targeting simultaneously the decline in short-term debt, output, and trade credit during 2007&ndash;2009.</p>
+      <p><strong>Model validation.</strong> The cross-sectoral distribution of trade credit is not targeted. The model produces correlations with the data of 0.54 for the level of AP/sales and 0.42 for the change in AP during the Great Recession. It also correctly signs the correlations between trade credit and intermediate input intensity, supplier concentration, and bank credit usage. These results are in Table 4.</p>
+      <p><strong>Key results.</strong> The credit multiplier (16% more output) is disciplined by the 40% share of credit backed by receivables. The amplification result (2&times; responsiveness) follows from the observed decline in trade credit exceeding the decline in revenues during the crisis, placing the economy in the amplification region.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t10">
+  <div class="card-header">
+    <input type="checkbox" id="t10" onchange="persist('t10')">
+    <span class="card-title" id="title-t10">Why micro-foundations matter for AER (R4&rsquo;s main point)</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Empty response to Editor 5: Ben relays R4&rsquo;s conditions (a), (b), (c)</li>
+    <li>Editor says &ldquo;the more of this you can do, the better&rdquo;</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:403</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We address R4&rsquo;s three criteria, focusing on (a) and (b).</p>
+      <p><strong>On (a):</strong> Our micro-foundation resolves a genuine conflict in the existing quantitative literature. Shao (2025) finds that trade credit <em>amplifies</em> financial shocks, while Reischer (2024) finds that it <em>smooths</em> them. This contradiction reflects different assumptions about what governs the trade credit limit, not different calibrations. Our micro-foundation derives the constraint from limited commitment: it binds on the present value of the relationship, generating a <em>state-dependent</em> response&mdash;trade credit smooths when suppliers are unconstrained and amplifies when they are constrained. The direction is an endogenous prediction, not an assumption. Our calibration places Italy in the amplification region.</p>
+      <p><strong>On (b):</strong> Because the constraint is forward-looking, current trade credit responds to changes in expectations about future conditions. Section 3.3.4 shows that a tightening of buyer borrowing capacity reduces trade credit even when suppliers are unaffected&mdash;because the relationship value J falls. This channel is absent from static frameworks. The micro-foundation also generates a novel policy implication (Section 5.4): subsidies to suppliers can be more effective than subsidies to customers, because customer subsidies weaken repayment incentives. This result cannot arise with reduced-form constraints.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t11">
+  <div class="card-header">
+    <input type="checkbox" id="t11" onchange="persist('t11')">
+    <span class="card-title" id="title-t11">Role and robustness of modeling assumptions</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Empty response to Editor 6: R3 point 1 (surplus division, asymmetric constraints, common &theta;) and R4 point 3.1</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:417</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We expanded Section 3.3 to discuss assumptions and study extensions.</p>
+      <p><strong>Surplus division.</strong> In the full model with N>1, downstream firms receive positive rents even when unconstrained. Revised calibration targets a 30% gross markup. The MPE extension (linear pricing, no commitment) preserves core predictions.</p>
+      <p><strong>Asymmetric constraints.</strong> Section 2.3 now discusses a forward-looking bank constraint (temporary exclusion after default). We argue this would not materially change results because the calibration targets the level and trajectory of bank debt.</p>
+      <p><strong>Common &theta;.</strong> Section 3.3.4 studies &theta;<sub>u</sub> &ne; &theta;<sub>d</sub>, isolating two complementarity channels. Both generate amplification.</p>
+      <p><strong>Equilibrium default (R4).</strong> Default does not occur on equilibrium path because the supplier adjusts continuation values. We discuss two tractable extensions that would generate default (mid-period idiosyncratic shocks, one-period contracts) and flag upstream propagation as a direction for future research.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t12">
+  <div class="card-header">
+    <input type="checkbox" id="t12" onchange="persist('t12')">
+    <span class="card-title" id="title-t12">Two complementarities between bank and trade credit</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Empty response to Editor 7 (R1 point 1): buyer size &rarr; relationship value &rarr; trade credit</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:424</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We added Section 3.3.4, &ldquo;Financial shocks to suppliers versus buyers.&rdquo; R1 correctly identifies two complementarity channels: (i) supplier-financing (suppliers use bank credit to discount receivables) and (ii) relationship-value (tighter buyer constraints reduce J, tightening trade credit even if supplier capacity is unchanged).</p>
+      <p>We introduce &theta;<sub>u</sub> for suppliers and &theta;<sub>d</sub> for customers. A tightening of &theta;<sub>d</sub> holding &theta;<sub>u</sub> fixed reduces J, contracting trade credit through the relationship-value channel alone. A tightening of &theta;<sub>u</sub> holding &theta;<sub>d</sub> fixed reduces supplier discounting capacity. Both generate amplification. In the quantitative analysis we focus on aggregate shocks (&theta;<sub>u</sub> = &theta;<sub>d</sub>), but this section clarifies the distinct forces.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t13">
+  <div class="card-header">
+    <input type="checkbox" id="t13" onchange="persist('t13')">
+    <span class="card-title" id="title-t13">Modeling the Great Recession as a credit supply shock</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Empty response to Editor 8 (R2 point 7): is a debt-limit shock appropriate?</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:432</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We have added a discussion in Section 5.1. Three considerations motivate the debt-limit shock:</p>
+      <p><strong>1. Italian data support quantity adjustment.</strong> Spreads on short-term corporate loans barely moved in 2008&ndash;2009, while loan volumes fell substantially&mdash;consistent with a debt-limit shock rather than an interest-rate shock.</p>
+      <p><strong>2. Clean identification of the trade credit response.</strong> A shock to &beta; would simultaneously affect both bank credit and trade credit (since TC limits depend on relationship present values), conflating the mechanism we want to study. The debt-limit shock cleanly isolates how trade credit responds when bank credit supply contracts.</p>
+      <p><strong>3. GE demand channel is present.</strong> Although we abstract from nominal rigidities, constrained firms&rsquo; output reduction lowers the aggregate consumption bundle, reducing demand for all varieties&mdash;including those of unconstrained firms. We have expanded this discussion in the revision.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t14">
+  <div class="card-header">
+    <input type="checkbox" id="t14" onchange="persist('t14')">
+    <span class="card-title" id="title-t14">Why Italy in Orbis</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Empty response to Editor 9 (R4 point 3.2): OECD rates Italy as &ldquo;middling&rdquo; coverage</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:439</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We use Italian Orbis data for three reasons, now articulated in a new paragraph in Section 5.1.</p>
+      <p><strong>Coverage.</strong> Italy&rsquo;s Orbis coverage is strong for 2005&ndash;2015. Our balanced panel includes 300,000+ firms across 58 sectors. We verified stability to coverage threshold changes.</p>
+      <p><strong>Institutional knowledge.</strong> We have detailed knowledge of Italian financial instruments for discounting receivables (<em>rischi autoliquidanti</em>). This allowed us to construct the key calibration target&mdash;the share of bank credit backed by receivables (~40%)&mdash;which is not readily available for other Orbis countries.</p>
+      <p><strong>Episode relevance.</strong> Italy experienced a sharp, well-documented bank credit contraction during the Great Recession. The institutional environment (pervasive trade credit) makes Italy a particularly informative case. We acknowledge in the conclusion that extending to other countries is an important direction.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card low" id="task-t15">
+  <div class="card-header">
+    <input type="checkbox" id="t15" onchange="persist('t15')">
+    <span class="card-title" id="title-t15">Roadmap paragraph at end of introduction</span>
+    <span class="tag low">low</span>
+  </div>
+  <ul>
+    <li>Empty response to Minor 1</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:447</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We have added the following roadmap paragraph at the end of the introduction:</p>
+      <p>&ldquo;The remainder of the paper is organized as follows. Section 2 presents the model environment and defines equilibrium. Section 3 analyzes a simplified one-sector version that is analytically tractable and derives the main theoretical results. Section 4 extends the analysis to the full multi-sector model and describes the numerical solution. Section 5 presents the quantitative analysis. Section 6 concludes.&rdquo;</p>
+    </div>
+  </details>
+</div>
+
+<div class="card low" id="task-t16">
+  <div class="card-header">
+    <input type="checkbox" id="t16" onchange="persist('t16')">
+    <span class="card-title" id="title-t16">&ldquo;Vertical supply chain&rdquo; terminology</span>
+    <span class="tag low">low</span>
+  </div>
+  <ul>
+    <li>Empty response to Minor 2: Ben found &ldquo;vertical supply chain&rdquo; confusing given only two layers</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:456</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We now refer to &ldquo;supply chains with two layers&rdquo; and added a clarifying sentence in Section 2: &ldquo;Each supply chain in our model has exactly two layers: upstream firms that produce intermediate inputs and downstream firms that combine these inputs with labor to produce final goods.&rdquo;</p>
+    </div>
+  </details>
+</div>
+
+<div class="card low" id="task-t17">
+  <div class="card-header">
+    <input type="checkbox" id="t17" onchange="persist('t17')">
+    <span class="card-title" id="title-t17">Rename &ldquo;Data&rdquo; subsection containing Table 2</span>
+    <span class="tag low">low</span>
+  </div>
+  <ul>
+    <li>Empty response to Minor 3</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:467</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We reorganized Section 5. Data description is now in Section 5.1 (&ldquo;Data and Calibration&rdquo;), while the regressions (Table 2) and model validation are in Section 5.2 (&ldquo;Cross-Sectional Predictions&rdquo;). This also accommodates the removal of the DiD analysis: Section 5.2 now contains a coherent narrative about model fit in normal times and during the crisis.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card low" id="task-t18">
+  <div class="card-header">
+    <input type="checkbox" id="t18" onchange="persist('t18')">
+    <span class="card-title" id="title-t18">&ldquo;diff-in-diff&rdquo; &rarr; &ldquo;difference-in-differences (DiD)&rdquo;</span>
+    <span class="tag low">low</span>
+  </div>
+  <ul>
+    <li>Empty response to Minor 4</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:474</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>Corrected throughout. Since the DiD analysis has been removed from the main text per Comment 3, the change applies primarily to passages explaining why it was removed and to any retained appendix discussion.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card low" id="task-t19">
+  <div class="card-header">
+    <input type="checkbox" id="t19" onchange="persist('t19')">
+    <span class="card-title" id="title-t19">Consistent 16% vs. 14% output language</span>
+    <span class="tag low">low</span>
+  </div>
+  <ul>
+    <li>Empty response to Minor 5</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_Editor.tex:486</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>We now use consistent language throughout: &ldquo;trade credit supports X% more output.&rdquo; We added a row at the end of Table 5 labeled &ldquo;Implied output gain from trade credit&rdquo; that reports this figure directly. For clarity: if the spot economy produces 86% of benchmark output, the benchmark produces 1/0.86 &minus; 1 = 16.3% more, which we round to 16%.</p>
+    </div>
+  </details>
+</div>
+
+<!-- ================================================================== -->
+<div class="section-heading" id="sec-C">C. Letter to R1 (<code>Letter_to_R1.tex</code>)</div>
+<!-- ================================================================== -->
+
+<div class="card high" id="task-t20">
+  <div class="card-header">
+    <input type="checkbox" id="t20" onchange="persist('t20')">
+    <span class="card-title" id="title-t20">Two-theta IRF figures missing from letter</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Response to Comment 1 quotes Section 3.3.4 text but includes no figures&mdash;the quantitative decomposition into &theta;<sub>d</sub>&uarr; vs. &theta;<sub>u</sub>&uarr; is load-bearing</li>
+    <li>Matlab IRFs need to be generated, inserted as a figure, and surrounded by prose</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:198</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Letter text after the Section 3.3.4 quote</div>
+      <p>&ldquo;To illustrate these two channels quantitatively, Figure X reports impulse response functions of output, total bank credit, and trade credit to a shock that tightens only &theta;<sub>d</sub> (Panel A) and only &theta;<sub>u</sub> (Panel B), each holding the other friction fixed at &theta;<sub>L</sub>, starting from the amplification region. [Insert figure.] Panel A shows that even when suppliers&rsquo; own borrowing capacity is unchanged, a tightening of customer credit conditions reduces trade credit&mdash;because the relationship value J falls. Panel B shows the direct supplier channel: when &theta;<sub>u</sub> rises, suppliers can discount fewer receivables, forcing a cut in trade credit that bank borrowing cannot offset (owing to the pecking order). In both panels the output response exceeds that of the spot economy, confirming that both complementarity channels are operative.&rdquo;</p>
+      <div class="sugg-label">Paper action</div>
+      <p>Add a new figure in Section 3.3.4 produced from existing Matlab IRF code, running twice&mdash;once with &theta;<sub>d</sub> switching from &theta;<sub>L</sub> to &theta;<sub>H</sub> (holding &theta;<sub>u</sub> fixed), and once vice versa.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t21">
+  <div class="card-header">
+    <input type="checkbox" id="t21" onchange="persist('t21')">
+    <span class="card-title" id="title-t21">Additional Proposition 2 exposition improvements</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Placeholder &ldquo;Specifically, xxx.&rdquo; in response to Comment 4 about unclear exposition</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:307</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>Replace &ldquo;Specifically, xxx.&rdquo; with: &ldquo;Specifically, we reorganized Section 3.2 to distinguish three regions explicitly&mdash;the unconstrained region (&theta;=0), the smoothing region (&theta; &isin; (0,&theta;&#773;]), and the amplification region (&theta; > &theta;&#773;)&mdash;which were previously collapsed into two. Separating the unconstrained and smoothing regions allows us to explain the pecking order directly: trade credit is not used when final good firms are unconstrained, because extending it is costly for suppliers and unnecessary for customers. In the amplification region we added a closed-form output elasticity that decomposes into a leverage term (larger with trade credit because suppliers discount receivables) and a countervailing relationship-value term, making analytically precise the condition under which trade credit amplifies rather than dampens the shock.&rdquo;</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t22">
+  <div class="card-header">
+    <input type="checkbox" id="t22" onchange="persist('t22')">
+    <span class="card-title" id="title-t22">Distributional plots of borrowing capacity across sectors</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Comment 6 response is internal notes only: &ldquo;Think about having some distributional plots&hellip;&rdquo;</li>
+    <li>Need scatter of sector-level Lagrange multiplier on supplier constraint vs. model-predicted output fall</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:334</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Letter text</div>
+      <p>&ldquo;Thank you for this suggestion. We now show in Figure X a scatter plot of two sector-level objects from the calibrated model: the Lagrange multiplier on the supplier&rsquo;s borrowing constraint (horizontal axis, measuring how tightly the constraint binds) and the model-predicted percentage fall in output during the 2007&ndash;2009 shock (vertical axis). The figure shows a clear positive relationship: sectors where suppliers are more constrained in steady state experience disproportionately large output falls during the financial shock. This heterogeneity is driven primarily by the interaction between &eta;<sub>i</sub> and N<sub>i</sub>&mdash;sectors with high input shares and few suppliers are those where trade credit is most critical and the supplier&rsquo;s constraint most likely to bind.&rdquo;</p>
+      <div class="sugg-label">Paper action</div>
+      <p>Add scatter as new panel in Figure 6 or standalone figure in Section 5.2. X-axis: average Lagrange multiplier on supplier borrowing constraint evaluated at &theta;<sub>H</sub>. Y-axis: sector-level output fall. Produce from existing Matlab output.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t23">
+  <div class="card-header">
+    <input type="checkbox" id="t23" onchange="persist('t23')">
+    <span class="card-title" id="title-t23">Micro-evidence references: section number and paragraph</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>&ldquo;Section XX&rdquo; placeholder for where Boissay&ndash;Gropp, Garcia-Appendini&ndash;Montoriol-Garriga, and Willner are discussed</li>
+    <li>May need to write the paragraph if it doesn&rsquo;t yet exist in the manuscript</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:344</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Draft for the paper (Section 5.2)</div>
+      <p>&ldquo;Our results are also consistent with micro-evidence on suppliers as liquidity providers. Boissay and Gropp (2013) document using European firm-level data that liquidity shortfalls propagate along supply chains through trade credit defaults, a mechanism our model captures through the collapse of trade credit when suppliers&rsquo; borrowing constraints bind. Garcia-Appendini and Montoriol-Garriga (2013) exploit the 2007&ndash;2008 credit crisis and find that suppliers with better access to credit increased trade credit to constrained customers, consistent with the smoothing region of our model. Willner (2000) provides an early theoretical argument for suppliers&rsquo; comparative advantage in lending to customers, which motivates our reliance on the reputation mechanism.&rdquo;</p>
+      <p>Then replace &ldquo;Section XX&rdquo; in the letter with the correct section number.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t24">
+  <div class="card-header">
+    <input type="checkbox" id="t24" onchange="persist('t24')">
+    <span class="card-title" id="title-t24">Discussion of model abstractions: N, concentration, substitutability, bargaining</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Comment 8 response is all-caps internal note: &ldquo;WE SHOULD SIMPLY ADD A DISCUSSION&hellip;&rdquo;</li>
+    <li>Need a paragraph for Section 2.3 and a polished letter response</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:354</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Draft for Section 2.3 of the paper</div>
+      <p>&ldquo;Several real-world dimensions of supply chains are absent from our model. First, we set the number of suppliers per sector N<sub>i</sub> to be fixed and use the Herfindahl index of supplier concentration as its empirical proxy. We abstract from the elasticity of substitution &sigma; as a separate source of cross-sectoral variation because we lack reliable sector-level estimates for Italy. Table 2 columns (5)&ndash;(7) show that controlling for network position and financial characteristics leaves the HHI<sup>supplier</sup> coefficient stable. Second, we assume suppliers are homogeneous within a sector. With heterogeneous suppliers, customers could diversify across suppliers with different constraints, weakening amplification. Third, suppliers make take-it-or-leave-it offers. Introducing Nash bargaining would alter surplus division, but the qualitative predictions survive, as we show in the MPE extension (Section 3.3.2) with competitive pricing.&rdquo;</p>
+      <div class="sugg-label">Letter text</div>
+      <p>Preface with: &ldquo;Thank you for this comment. We now include in Section 2.3 a discussion of the model features we abstract from. We paste the relevant passage below for your convenience:&rdquo;</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t25">
+  <div class="card-header">
+    <input type="checkbox" id="t25" onchange="persist('t25')">
+    <span class="card-title" id="title-t25">Figure 2 Panel B: bank lending to suppliers</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Red placeholder: <code>***need to update figure in manuscript and copy here***</code></li>
+    <li>Figure must be regenerated to add supplier bank credit series, updated in manuscript and letter</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:469</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Matlab + paper action</div>
+      <p>Add a fourth series to Figure 2: bank credit to the supplier = (1&minus;&theta;)p<sup>tc</sup>. This is already computed in the steady-state characterization. Update <code>Figures/Figure_2.pdf</code>.</p>
+      <div class="sugg-label">Letter text</div>
+      <p>&ldquo;Panel B of Figure 2 (shown below) plots bank lending to suppliers alongside bank lending to final-good firms and trade credit. Bank lending to suppliers is zero in the unconstrained region, rises in the smoothing region as suppliers discount receivables to fund extended trade credit, and falls sharply once &theta; exceeds &theta;&#773; as the supplier&rsquo;s borrowing constraint binds. This panel makes the credit multiplier mechanism directly visible: suppliers act as conduits between the banking sector and final-good producers.&rdquo;</p>
+    </div>
+  </details>
+</div>
+
+<div class="card low" id="task-t26">
+  <div class="card-header">
+    <input type="checkbox" id="t26" onchange="persist('t26')">
+    <span class="card-title" id="title-t26">Number of firms in balanced panel from 2003</span>
+    <span class="tag low">low</span>
+  </div>
+  <ul>
+    <li>&ldquo;XX firms&rdquo; placeholder in DiD pre-trends response</li>
+    <li>Need to run panel construction code with 2003 start date</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R1.tex:293</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>Run the Orbis panel construction with a 2003 start date and the same cleaning rules. Insert the resulting count. The sentence should read: &ldquo;&hellip;we would be able to construct a balanced panel with only [NUMBER] firms (rather than the approximately 300,000 we currently cover).&rdquo; The argument is strengthened if the number is below ~50,000, which would be too few for reliable cross-sectoral averages at the 2-digit NACE level.</p>
+    </div>
+  </details>
+</div>
+
+<!-- ================================================================== -->
+<div class="section-heading" id="sec-D">D. Letter to R2 (<code>Letter_to_R2.tex</code>)</div>
+<!-- ================================================================== -->
+
+<div class="card high" id="task-t27">
+  <div class="card-header">
+    <input type="checkbox" id="t27" onchange="persist('t27')">
+    <span class="card-title" id="title-t27">Per-paper differentiation in literature response</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>&ldquo;Beef up&rdquo; placeholder for discussing Miranda-Pinto &amp; Zhang, Shao, Hardy et al., Garcia-Marin et al.</li>
+    <li>Each paper needs concrete paragraph explaining what it does and where our paper goes further</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R2.tex:172</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Letter text</div>
+      <p>Thank you for this comment. We have substantially expanded the literature review.</p>
+      <p><strong>Miranda-Pinto and Zhang (2024)</strong> study trade credit during the Great Recession with a micro-foundation based on input-quality uncertainty and costly monitoring. Their enforcement mechanism is static and information-based. We differ in two respects: our micro-foundation is dynamic and relational (enforcement depends on the continuation value of the relationship), and our model features a credit-multiplier mechanism absent in their framework.</p>
+      <p><strong>Shao (2025)</strong> introduces heterogeneous firms with receivables as collateral, governed by reduced-form constraints. The key distinction is that trade credit in Shao is perfectly enforceable by assumption, while in our model enforcement is endogenous&mdash;it depends on the relationship value, generating state-dependent linkages.</p>
+      <p><strong>Hardy, Saffie, and Simonovska (2024)</strong> use Orbis data to study FX-risk and trade credit in international trade. We use Italian Orbis for a different purpose: disciplining cross-sectoral variation in a general-equilibrium model. Their environment is static and partial-equilibrium.</p>
+      <p><strong>Garcia-Marin, Justel, and Schmidt-Eisenlohr (2019)</strong> provide micro-evidence that suppliers with larger markups extend more trade credit&mdash;directly supportive of our model. We embed this enforcement logic in a dynamic GE model and trace out its aggregate implications.</p>
+      <div class="sugg-label">Paper action</div>
+      <p>Replace the existing literature paragraph with structured, per-paper discussion organized around: (i) static vs. dynamic enforcement; (ii) reduced-form vs. micro-founded collateral; (iii) partial-equilibrium vs. GE.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t28">
+  <div class="card-header">
+    <input type="checkbox" id="t28" onchange="persist('t28')">
+    <span class="card-title" id="title-t28">MPE extension: polished response on commitment robustness</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Comment 2 response is internal bullet-point notes with unfinished sentences</li>
+    <li>Needs polished prose defending the commitment baseline and summarizing the MPE extension</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R2.tex:186</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Letter text</div>
+      <p>Thank you for this comment. We added Section 3.4 studying the model without commitment.</p>
+      <p><strong>Why commitment is the natural baseline.</strong> The empirical literature consistently documents that trade credit is concentrated in long-term repeated relationships (Cunat 2007, Antras and Foley 2015, Benguria et al. 2023). Commitment allows the supplier to offer better future terms when the constraint binds today&mdash;exactly the dynamic accommodation that relational contracts support.</p>
+      <p><strong>The MPE extension.</strong> We pair no-commitment with linear pricing (since TIOLI without commitment would trivially eliminate trade credit). The MPE is substantially more tractable: no need to track promised utility. All qualitative predictions survive&mdash;pecking order, credit multiplier, state-dependent amplification. The quantitative difference: the smoothing region is smaller, because committed suppliers can promise larger future surpluses.</p>
+      <div class="sugg-label">Paper action</div>
+      <p>Section 3.4 and Appendix: expand the 4-sentence summary to include (a) why TIOLI fails without commitment; (b) three-region result; (c) quantitative comparison of first-best region size; (d) table/figure comparing amplification elasticities across baseline and MPE.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t29">
+  <div class="card-header">
+    <input type="checkbox" id="t29" onchange="persist('t29')">
+    <span class="card-title" id="title-t29">Two-way trade credit discussion</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>&ldquo;Beef up a little the discussion in section 2&rdquo;&mdash;one-line stub</li>
+    <li>Comment 3: model assumes one-directional TC, but some services (Netflix, etc.) are paid upfront</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R2.tex:195</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Letter text</div>
+      <p>We agree that trade credit does not always flow in a single direction. The prepayment pattern the referee describes is concentrated in consumer-facing services, not in the upstream supplier&ndash;customer B2B relationships our model captures. In our data (Italian Orbis, 54 sectors), accounts payable (supplier&rarr;customer credit) substantially exceeds accounts receivable in nearly all sectors. Garcia-Marin et al. (2019) document that larger markups are associated with more supplier&rarr;buyer credit&mdash;precisely the direction we model.</p>
+      <p>The parameter &pi;<sub>i</sub> (fraction of morning sales paid by households in the afternoon) already captures a form of delayed consumer payment. We added a footnote in Section 2 clarifying this assumption and noting that it would be straightforward to introduce time-to-build on the supplier side to generate two-way flows.</p>
+      <div class="sugg-label">Paper action</div>
+      <p>Expand footnote in Section 2.3 (line ~275) with 2&ndash;3 sentences addressing upfront payment in service sectors, citing Garcia-Marin et al. as supporting evidence, and referencing &pi;<sub>i</sub>.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t30">
+  <div class="card-header">
+    <input type="checkbox" id="t30" onchange="persist('t30')">
+    <span class="card-title" id="title-t30">International evidence on invoice discounting</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>&ldquo;INSERT SOMETHING ABOUT OTHER COUNTRIES&rdquo; in factoring response (Comment 8)</li>
+    <li>Italian evidence is thorough; need to add US, UK, and other country data</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R2.tex:313</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Letter text</div>
+      <p>&ldquo;This pattern is not specific to Italy. In the United States, Caglio, Darst, and Kalemli-Ozcan (2021) find that roughly one-third of all short-term bank loans to US firms are backed by accounts receivables and inventories&mdash;comparable to our Italian estimate of approximately 40% for advances backed by receivables alone. Importantly, the dominant form of AR-backed lending in the US is also asset-based lending with recourse, where the borrower retains credit risk. Factoring without recourse represents a small minority of total factoring volume (typically 10&ndash;15% per industry associations). Similar patterns are documented for the UK, where invoice discounting (with recourse) accounts for roughly 80% of total invoice finance outstanding (UK Finance data). These cross-country patterns reinforce our finding: the predominant mechanism for converting receivables into liquidity is discounting with recourse&mdash;consistent with our model&rsquo;s prediction that credit risk remains with the supplier.&rdquo;</p>
+      <div class="sugg-label">Paper action</div>
+      <p>Expand the existing Caglio et al. footnote (manuscript line 770) to note AR-backed lending with recourse is dominant in the US as well. Keep the manuscript treatment to 2 sentences; the fuller discussion belongs in the letter.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card low" id="task-t31">
+  <div class="card-header">
+    <input type="checkbox" id="t31" onchange="persist('t31')">
+    <span class="card-title" id="title-t31">BDS factoring table number placeholder</span>
+    <span class="tag low">low</span>
+  </div>
+  <ul>
+    <li>&ldquo;Table TBD30315&rdquo;&mdash;needs to be replaced with actual BDS table identifier for factoring by type</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R2.tex:305</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>Look up the correct BDS table in the Bank of Italy portal (sezione &lsquo;intermediari finanziari&rsquo;) for factoring outstanding by type (pro-soluto / pro-solvendo) starting 2008. Replace &ldquo;TBD30315&rdquo; in the letter and cross-check manuscript line 768 to ensure TRI30101 and TFR20281 are correct and this factoring-by-type table is cited separately if distinct.</p>
+    </div>
+  </details>
+</div>
+
+<!-- ================================================================== -->
+<div class="section-heading" id="sec-E">E. Letter to R3 (<code>Letter_to_R3.tex</code>)</div>
+<!-- ================================================================== -->
+
+<div class="card high" id="task-t32">
+  <div class="card-header">
+    <input type="checkbox" id="t32" onchange="persist('t32')">
+    <span class="card-title" id="title-t32">Missing citation for &sigma;=4.8</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>&ldquo;following novel evidence from XX&rdquo;&mdash;needs the Baqaee et al. (2023) reference confirmed</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R3.tex:379</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <p>The manuscript already references <code>\citealt{baqaee2023consumer}</code>. Check the .bib file to confirm: likely Baqaee, Farhi, and Sangani (2023), &ldquo;The Supply-Side Effects of Monetary Policy&rdquo; or &ldquo;Consumer Surplus of Trade and Trade Policy.&rdquo; Verify the co-authors and exact title, then replace &ldquo;XX&rdquo; with the spelled-out citation matching the .bib key.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card low" id="task-t33">
+  <div class="card-header">
+    <input type="checkbox" id="t33" onchange="persist('t33')">
+    <span class="card-title" id="title-t33">Appendix: material expenditures vs. I-O table comparison</span>
+    <span class="tag low">low</span>
+  </div>
+  <ul>
+    <li>R3 minor comment: compare constructed material expenditures to Italian I-O table</li>
+    <li>Response is stub: &ldquo;ok, we could do this&rdquo;</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R3.tex:423</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Letter text</div>
+      <p>&ldquo;We thank the referee for this suggestion. We added Appendix [X] comparing our constructed material expenditure shares, aggregated to two-digit sectors, against the Italian input-output table (ISTAT). The two series are closely aligned: the cross-sector correlation is [X] and the mean absolute deviation is [X] percentage points. The largest discrepancies arise in sectors with thinner Orbis coverage.&rdquo;</p>
+      <div class="sugg-label">Paper action</div>
+      <p>Add short appendix (1&ndash;2 pages) with a scatter plot (constructed vs. I-O) and report the correlation and MAD.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card low" id="task-t34">
+  <div class="card-header">
+    <input type="checkbox" id="t34" onchange="persist('t34')">
+    <span class="card-title" id="title-t34">Improve quantification section exposition</span>
+    <span class="tag low">low</span>
+  </div>
+  <ul>
+    <li>R3: &ldquo;the quantification part is somewhat less clear and can be improved&rdquo;</li>
+    <li>Response is stub: &ldquo;Ok, answering 2.4 should go a long way&rdquo;</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R3.tex:429</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Letter text</div>
+      <p>&ldquo;We agree with this assessment and have revised the quantification section to improve clarity. Specifically, we (i) added a roadmap paragraph distinguishing the three calibration steps and identifying which moments pin down which parameters; (ii) separated externally set parameters (with citations) from internally calibrated ones; and (iii) expanded the explanation of how the three new calibration targets&mdash;markups, share of bank credit backed by receivables, and the decline in trade credit during the Great Recession&mdash;jointly discipline the model.&rdquo;</p>
+      <div class="sugg-label">Paper action</div>
+      <p>Consider adding a calibration summary table: parameter | value | target moment | source/method.</p>
+    </div>
+  </details>
+</div>
+
+<!-- ================================================================== -->
+<div class="section-heading" id="sec-F">F. Letter to R4 (<code>Letter_to_R4.tex</code>)</div>
+<!-- ================================================================== -->
+
+<div class="card high" id="task-t35">
+  <div class="card-header">
+    <input type="checkbox" id="t35" onchange="persist('t35')">
+    <span class="card-title" id="title-t35">R4&rsquo;s three conditions for AER publication (a/b/c)</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>This is the <strong>most critical response</strong>&mdash;R4 sets explicit conditions (a) micro-foundations change answers, (b) new moments/counterfactuals, (c) granular micro-data</li>
+    <li>Current state: (a) one unfinished sentence, (b) raw internal notes, (c) not addressed</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R4.tex:174&ndash;179</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Condition (a): micro-foundations change the sign</div>
+      <p>The existing reduced-form literature reaches contradictory conclusions: Shao (2025) finds amplification, Reischer (2024) finds smoothing. These opposite predictions reflect different assumptions about the trade credit limit, not calibration. Our micro-foundation derives the constraint from limited commitment: it generates a state-dependent response&mdash;smoothing when suppliers are unconstrained, amplification when they are constrained. The direction is an endogenous prediction. Our calibration places Italy in the amplification region, generating the 2&times; result. No reduced-form model can make this determination from first principles.</p>
+      <div class="sugg-label">Condition (b): new moments and counterfactuals</div>
+      <p>Because the constraint is forward-looking, current trade credit responds to changes in expectations. Section 3.3.4 shows that buyer credit tightening reduces trade credit even when suppliers are unaffected&mdash;because J falls. This channel is absent from static frameworks. The micro-foundation also generates a novel policy implication (Section 5.4): subsidies to suppliers can be more effective than subsidies to customers, because customer subsidies weaken repayment incentives. This cannot arise with reduced-form constraints.</p>
+      <div class="sugg-label">Condition (c): granular micro-data</div>
+      <p>We do not have firm-to-firm trade credit microdata. We acknowledge this honestly: our calibration relies on aggregate sectoral moments from Orbis and the Bank of Italy, and we validate against cross-sectoral predictions. Bringing firm-to-firm data to bear on a model of this kind remains an important open problem.</p>
+      <div class="sugg-label">Paper action</div>
+      <p>For (a): ensure the Shao-vs-Reischer contrast is prominent in the introduction and quantitative section. For (b): frame the beta-shock and two-theta sections as exploiting the dynamic nature of the micro-foundation. For (c): add a brief limitations paragraph at the end of the quantitative section.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t36">
+  <div class="card-header">
+    <input type="checkbox" id="t36" onchange="persist('t36')">
+    <span class="card-title" id="title-t36">Supply chain mapping and two-layer model structure</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Response is raw internal notes: &ldquo;i) explain better how the mapping is done; ii) argue that&hellip;&rdquo;</li>
+    <li>R4 questions: no real supply chain (just buyer&ndash;seller), mapping unclear since most firms sell both intermediates and final goods</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R4.tex:225</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Letter text</div>
+      <p><strong>On model structure:</strong> The two-layer setup is not meant to capture a literal sequential chain. It is the minimal structure needed to generate an endogenous trade credit relationship between a buyer and seller who transact repeatedly. A single-sector model would lose the cross-sectoral variation used for validation.</p>
+      <p><strong>On data mapping:</strong> We classify firms by primary NACE code and split revenue into intermediate and final components using Italian I-O table shares. This is imperfect but well-defined and standard. Crucially, any model mapping multi-product firms to a sectoral GE framework must make an analogous assignment&mdash;and a reduced-form model would have fewer moments (no trade credit moments) to discipline the split.</p>
+      <div class="sugg-label">Paper action</div>
+      <p>Add a paragraph to the data section explaining: (1) the two-layer structure is minimal for generating bilateral relationship value; (2) the precise formula for the intermediate/final revenue split using I-O shares; (3) robustness to perturbation of I-O shares.</p>
+    </div>
+  </details>
+</div>
+
+<div class="card high" id="task-t37">
+  <div class="card-header">
+    <input type="checkbox" id="t37" onchange="persist('t37')">
+    <span class="card-title" id="title-t37">Defending Italy Orbis coverage</span>
+    <span class="tag high">high</span>
+  </div>
+  <ul>
+    <li>Response is stub: &ldquo;Check the paper, for our years italy might be fine&rdquo;</li>
+    <li>R4 cites OECD Working Papers: Italy &ldquo;at best middling&rdquo; in Orbis coverage</li>
+  </ul>
+  <div class="file-box"><strong>Location:</strong> <code>Letter_to_R4.tex:231</code></div>
+  <details>
+    <summary>+ Claude suggestion</summary>
+    <div class="suggestion-body">
+      <div class="sugg-label">Letter text</div>
+      <p>The OECD assessment of &ldquo;middling&rdquo; coverage (Bajgar et al., 2020) pools all firm sizes and years. Two qualifications matter for our application:</p>
+      <p><strong>Coverage is strong for our sample period and firm size.</strong> For Italian firms with more than [X] employees, Orbis captures approximately [X]% of total sales as reported in ISTAT. Our balanced panel includes 300,000+ firms across 58 sectors.</p>
+      <p><strong>Italy is not an arbitrary choice.</strong> The Bank of Italy&rsquo;s Survey on Industrial and Service Firms provides an independent cross-check on Orbis and&mdash;critically&mdash;direct data on trade credit volumes and the instruments for discounting receivables (<em>rischi autoliquidanti</em>). This institutional detail is not available for countries with nominally better Orbis coverage. The joint availability of Orbis and the Bank of Italy data is what makes Italy the appropriate setting.</p>
+      <div class="sugg-label">Paper action</div>
+      <p>Add to data section: (1) Orbis coverage statistics for Italy by year and firm-size class; (2) cite the OECD paper, acknowledge the finding, then explain why large-firm coverage + BdI survey make Italy appropriate. (3) Verify coverage stats are computed.</p>
+    </div>
+  </details>
+</div>
+
+<!-- FAB -->
+<button class="fab" onclick="openModal()" title="Add task">+</button>
+
+<!-- Modal -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <h2>Add a task</h2>
+
+    <label for="newSection">Category</label>
+    <select id="newSection">
+      <option value="sec-A">A. Manuscript</option>
+      <option value="sec-A2">A2. Appendix Gaps</option>
+      <option value="sec-B">B. Letter to Editor</option>
+      <option value="sec-C">C. Letter to R1</option>
+      <option value="sec-D">D. Letter to R2</option>
+      <option value="sec-E">E. Letter to R3</option>
+      <option value="sec-F">F. Letter to R4</option>
+    </select>
+
+    <label for="newTitle">Title</label>
+    <input type="text" id="newTitle" placeholder="e.g., Add welfare discussion to conclusion">
+
+    <label for="newDesc">Description (optional)</label>
+    <textarea id="newDesc" placeholder="Additional details&hellip;"></textarea>
+
+    <label>Priority</label>
+    <div class="radio-row">
+      <label><input type="radio" name="newPriority" value="high" checked> High</label>
+      <label><input type="radio" name="newPriority" value="low"> Low</label>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-add" onclick="addTask()">Add task</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm dialog -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <p id="confirmMsg">Are you sure?</p>
+    <div class="confirm-actions">
+      <button class="btn-confirm-cancel" onclick="cancelConfirm()">Cancel</button>
+      <button class="btn-confirm-delete" onclick="execConfirm()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <h2>Edit task</h2>
+    <input type="hidden" id="editId">
+
+    <label for="editTitle">Title</label>
+    <input type="text" id="editTitle">
+
+    <label for="editDesc">Description</label>
+    <textarea id="editDesc"></textarea>
+
+    <label>Priority</label>
+    <div class="radio-row">
+      <label><input type="radio" name="editPriority" value="high"> High</label>
+      <label><input type="radio" name="editPriority" value="low"> Low</label>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+      <button class="btn-add" onclick="saveEdit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   Firebase-backed state — shared across all browsers
+   ============================================================ */
+var R = DB_ROOT; /* short alias */
+
+function fbSet(path, val) { db.ref(R + '/' + path).set(val); }
+function fbRef(path) { return db.ref(R + '/' + path); }
+
+/* ---- Sync indicator ---- */
+db.ref('.info/connected').on('value', function(snap) {
+  var on = snap.val() === true;
+  document.getElementById('syncDot').className = 'sync-dot ' + (on ? 'online' : 'offline');
+  document.getElementById('syncLabel').textContent = on ? 'synced' : 'offline';
+});
+
+/* ---- Counts ---- */
+function updateCounts() {
+  var cards = document.querySelectorAll('.card');
+  var high = 0, low = 0, done = 0;
+  cards.forEach(function(c) {
+    var cb = c.querySelector('input[type="checkbox"]');
+    if (cb && cb.checked) done++;
+    else if (c.classList.contains('high')) high++;
+    else if (c.classList.contains('low')) low++;
+  });
+  document.getElementById('countHigh').textContent = high;
+  document.getElementById('countLow').textContent = low;
+  document.getElementById('countDone').textContent = done;
+  var total = cards.length;
+  document.getElementById('progressBar').style.width = (total ? done/total*100 : 0) + '%';
+}
+
+/* ---- Checkbox persist ---- */
+function persist(id) {
+  var cb = document.getElementById(id);
+  var card = document.getElementById('task-' + id);
+  var title = document.getElementById('title-' + id);
+  fbSet('checked/' + id, cb.checked);
+  if (cb.checked) { card.classList.add('done'); title.classList.add('checked-title'); }
+  else { card.classList.remove('done'); title.classList.remove('checked-title'); }
+  updateCounts();
+}
+
+function applyChecked(id, val) {
+  var cb = document.getElementById(id);
+  var card = document.getElementById('task-' + id);
+  var title = document.getElementById('title-' + id);
+  if (!cb) return;
+  cb.checked = !!val;
+  if (val) { if(card) card.classList.add('done'); if(title) title.classList.add('checked-title'); }
+  else { if(card) card.classList.remove('done'); if(title) title.classList.remove('checked-title'); }
+}
+
+/* ---- Helpers ---- */
+function escHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+/* ---- Modal helpers ---- */
+function openModal() { document.getElementById('addModal').classList.add('open'); document.getElementById('newTitle').focus(); }
+function closeModal() { document.getElementById('addModal').classList.remove('open'); document.getElementById('newTitle').value=''; document.getElementById('newDesc').value=''; }
+document.getElementById('addModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+/* ---- Next ID ---- */
+function nextId() {
+  var max = 0;
+  document.querySelectorAll('.card').forEach(function(c) {
+    var m = c.id.match(/task-t(\d+)/); if(m) max = Math.max(max, parseInt(m[1]));
+  });
+  return 't' + (max + 1);
+}
+
+/* ---- Build & insert a card ---- */
+function createCard(id, title, desc, priority, sectionId, save) {
+  if (document.getElementById('task-' + id)) return document.getElementById('task-' + id);
+  var card = document.createElement('div');
+  card.className = 'card ' + priority;
+  card.id = 'task-' + id;
+  card.innerHTML =
+    '<div class="card-header">' +
+      '<input type="checkbox" id="' + id + '" onchange="persist(\'' + id + '\')">' +
+      '<span class="card-title" id="title-' + id + '">' + escHtml(title) + '</span>' +
+      '<span class="tag ' + priority + '">' + priority + '</span>' +
+    '</div>' +
+    (desc ? '<ul><li>' + escHtml(desc).replace(/\n/g,'</li><li>') + '</li></ul>' : '');
+  var sections = Array.from(document.querySelectorAll('.section-heading'));
+  var idx = sections.findIndex(function(s){ return s.id === sectionId; });
+  var anchor = (idx>=0 && idx<sections.length-1) ? sections[idx+1] : null;
+  if (anchor) { anchor.parentNode.insertBefore(card, anchor); }
+  else { var fab = document.querySelector('.fab'); fab.parentNode.insertBefore(card, fab); }
+  if (save) { fbSet('dynamic/' + id, {id:id, title:title, desc:desc||'', priority:priority, section:sectionId}); }
+  injectCardButtonsSingle(card);
+  updateCounts();
+  return card;
+}
+
+/* ---- Add from modal ---- */
+function addTask() {
+  var title = document.getElementById('newTitle').value.trim();
+  if (!title) { document.getElementById('newTitle').focus(); return; }
+  var desc = document.getElementById('newDesc').value.trim();
+  var priority = document.querySelector('input[name="newPriority"]:checked').value;
+  var sectionId = document.getElementById('newSection').value;
+  var id = nextId();
+  var card = createCard(id, title, desc, priority, sectionId, true);
+  card.scrollIntoView({ behavior:'smooth', block:'center' });
+  closeModal();
+}
+
+/* ---- Inject buttons into one card ---- */
+function injectCardButtonsSingle(card) {
+  if (card.querySelector('.card-actions')) return;
+  var header = card.querySelector('.card-header'); if(!header) return;
+  var id = card.id.replace('task-','');
+  var actions = document.createElement('span');
+  actions.className = 'card-actions';
+  actions.innerHTML =
+    '<button class="act-edit" onclick="openEditModal(\'' + id + '\')" title="Edit">&#9998;</button>' +
+    '<button class="act-comment" onclick="toggleComments(\'' + id + '\')" title="Comments">' +
+      '&#128172;<span class="comment-badge" id="badge-' + id + '" style="display:none">0</span>' +
+    '</button>' +
+    '<button class="act-delete" onclick="confirmDeleteTask(\'' + id + '\')" title="Delete">&#128465;</button>';
+  header.appendChild(actions);
+  var thread = document.createElement('div');
+  thread.className = 'comment-thread'; thread.id = 'comments-' + id;
+  thread.innerHTML =
+    '<div id="comment-list-' + id + '"></div>' +
+    '<div class="comment-input-row">' +
+      '<input type="text" id="cm-name-' + id + '" placeholder="Name">' +
+      '<textarea id="cm-text-' + id + '" placeholder="Add a comment&hellip;" rows="1"></textarea>' +
+      '<button onclick="postComment(\'' + id + '\')">Post</button>' +
+    '</div>';
+  card.appendChild(thread);
+}
+
+/* ---- Edit modal ---- */
+function openEditModal(id) {
+  var card = document.getElementById('task-' + id);
+  var titleEl = document.getElementById('title-' + id);
+  document.getElementById('editId').value = id;
+  document.getElementById('editTitle').value = titleEl.textContent;
+  var ul = card.querySelector(':scope > ul');
+  var descText = '';
+  if (ul) { var lines=[]; ul.querySelectorAll('li').forEach(function(li){lines.push(li.textContent);}); descText=lines.join('\n'); }
+  document.getElementById('editDesc').value = descText;
+  var priority = card.classList.contains('low') ? 'low' : 'high';
+  document.querySelector('input[name="editPriority"][value="' + priority + '"]').checked = true;
+  document.getElementById('editModal').classList.add('open');
+  document.getElementById('editTitle').focus();
+}
+function closeEditModal() { document.getElementById('editModal').classList.remove('open'); }
+document.getElementById('editModal').addEventListener('click', function(e){ if(e.target===this) closeEditModal(); });
+
+function saveEdit() {
+  var id = document.getElementById('editId').value;
+  var newTitle = document.getElementById('editTitle').value.trim(); if(!newTitle) return;
+  var newDesc = document.getElementById('editDesc').value.trim();
+  var newPriority = document.querySelector('input[name="editPriority"]:checked').value;
+  applyEdit(id, {title:newTitle, desc:newDesc, priority:newPriority});
+  fbSet('edits/' + id, {title:newTitle, desc:newDesc, priority:newPriority});
+  closeEditModal();
+}
+
+function applyEdit(id, e) {
+  var card = document.getElementById('task-' + id);
+  var titleEl = document.getElementById('title-' + id);
+  if (!card || !titleEl) return;
+  titleEl.textContent = e.title;
+  card.classList.remove('high','low'); card.classList.add(e.priority);
+  var tagEl = card.querySelector('.tag');
+  if(tagEl){ tagEl.className='tag '+e.priority; tagEl.textContent=e.priority; }
+  var ul = card.querySelector(':scope > ul');
+  if (e.desc) {
+    var liHtml = e.desc.split('\n').map(function(l){return '<li>'+escHtml(l)+'</li>';}).join('');
+    if(ul){ul.innerHTML=liHtml;} else { var nu=document.createElement('ul'); nu.innerHTML=liHtml; card.querySelector('.card-header').insertAdjacentElement('afterend',nu); }
+  } else if(ul){ ul.remove(); }
+  updateCounts();
+}
+
+/* ---- Comments ---- */
+function toggleComments(id) {
+  var thread = document.getElementById('comments-' + id);
+  thread.classList.toggle('open');
+  var nameInput = document.getElementById('cm-name-' + id);
+  var savedName = localStorage.getItem('todo_tc_username');
+  if (savedName && !nameInput.value) nameInput.value = savedName;
+}
+
+function postComment(id) {
+  var nameInput = document.getElementById('cm-name-' + id);
+  var textInput = document.getElementById('cm-text-' + id);
+  var name = nameInput.value.trim() || 'Anonymous';
+  var text = textInput.value.trim();
+  if (!text) { textInput.focus(); return; }
+  localStorage.setItem('todo_tc_username', name);
+  var comment = { name:name, text:text, time:new Date().toISOString() };
+  db.ref(R + '/comments/' + id).push(comment);
+  textInput.value = '';
+}
+
+function renderComment(id, key, c) {
+  var list = document.getElementById('comment-list-' + id); if(!list) return;
+  /* avoid duplicate */
+  if (list.querySelector('[data-key="'+key+'"]')) return;
+  var d = new Date(c.time);
+  var when = d.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' ' +
+             d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+  var item = document.createElement('div');
+  item.className = 'comment-item'; item.setAttribute('data-key', key);
+  item.innerHTML = '<div class="cm-meta"><strong>'+escHtml(c.name)+'</strong> &middot; '+when+'</div>' +
+                   '<div>'+escHtml(c.text)+'</div>' +
+                   '<button class="cm-delete" onclick="confirmDeleteComment(\''+id+'\',\''+key+'\')" title="Delete comment">&times;</button>';
+  list.appendChild(item);
+}
+
+function updateBadge(id, count) {
+  var badge = document.getElementById('badge-' + id);
+  if(badge){ badge.textContent=count; badge.style.display = count>0 ? 'inline-flex' : 'none'; }
+}
+
+/* ---- Confirm dialog ---- */
+var _confirmCallback = null;
+function showConfirm(msg, cb) {
+  document.getElementById('confirmMsg').textContent = msg;
+  _confirmCallback = cb;
+  document.getElementById('confirmOverlay').classList.add('open');
+}
+function cancelConfirm() { document.getElementById('confirmOverlay').classList.remove('open'); _confirmCallback=null; }
+function execConfirm() { document.getElementById('confirmOverlay').classList.remove('open'); if(_confirmCallback) _confirmCallback(); _confirmCallback=null; }
+document.getElementById('confirmOverlay').addEventListener('click', function(e){ if(e.target===this) cancelConfirm(); });
+
+/* ---- Delete task ---- */
+function confirmDeleteTask(id) {
+  var titleEl = document.getElementById('title-' + id);
+  var name = titleEl ? titleEl.textContent : id;
+  var short = name.length > 50 ? name.substring(0,50)+'...' : name;
+  showConfirm('Delete "'+short+'"?', function(){ deleteTask(id); });
+}
+function deleteTask(id) {
+  var card = document.getElementById('task-' + id);
+  if(card) card.remove();
+  fbSet('deleted/' + id, true);
+  fbSet('dynamic/' + id, null);
+  fbSet('checked/' + id, null);
+  fbSet('comments/' + id, null);
+  fbSet('edits/' + id, null);
+  updateCounts();
+}
+
+/* ---- Delete comment ---- */
+function confirmDeleteComment(taskId, key) {
+  showConfirm('Delete this comment?', function(){ deleteComment(taskId, key); });
+}
+function deleteComment(taskId, key) {
+  db.ref(R + '/comments/' + taskId + '/' + key).remove();
+}
+
+/* ============================================================
+   Firebase real-time listeners — sync across all browsers
+   ============================================================ */
+function setupListeners() {
+  /* Checked state */
+  fbRef('checked').on('value', function(snap) {
+    var data = snap.val() || {};
+    document.querySelectorAll('.card').forEach(function(card) {
+      var id = card.id.replace('task-','');
+      applyChecked(id, data[id]);
+    });
+    updateCounts();
+  });
+
+  /* Deleted tasks */
+  fbRef('deleted').on('value', function(snap) {
+    var data = snap.val() || {};
+    Object.keys(data).forEach(function(id) {
+      var card = document.getElementById('task-' + id);
+      if(card) card.remove();
+    });
+    updateCounts();
+  });
+
+  /* Dynamic tasks */
+  fbRef('dynamic').on('value', function(snap) {
+    var data = snap.val() || {};
+    Object.keys(data).forEach(function(id) {
+      var t = data[id];
+      if (!document.getElementById('task-' + t.id)) {
+        createCard(t.id, t.title, t.desc||'', t.priority, t.section, false);
+      }
+    });
+    updateCounts();
+  });
+
+  /* Edits */
+  fbRef('edits').on('value', function(snap) {
+    var data = snap.val() || {};
+    Object.keys(data).forEach(function(id) { applyEdit(id, data[id]); });
+  });
+
+  /* Comments — listen per-task */
+  fbRef('comments').on('value', function(snap) {
+    var allComments = snap.val() || {};
+    /* Clear all comment lists first, then re-render */
+    document.querySelectorAll('[id^="comment-list-"]').forEach(function(el){ el.innerHTML=''; });
+    Object.keys(allComments).forEach(function(taskId) {
+      var taskComments = allComments[taskId] || {};
+      var keys = Object.keys(taskComments);
+      keys.forEach(function(key) { renderComment(taskId, key, taskComments[key]); });
+      updateBadge(taskId, keys.length);
+    });
+    /* Update badges for tasks with no comments */
+    document.querySelectorAll('.card').forEach(function(card) {
+      var id = card.id.replace('task-','');
+      if (!allComments[id]) updateBadge(id, 0);
+    });
+  });
+}
+
+/* ---- Init ---- */
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.card').forEach(function(card){ injectCardButtonsSingle(card); });
+  setupListeners();
+});
+</script>
+
+</body>
+</html>
