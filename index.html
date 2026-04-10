@@ -991,6 +991,8 @@
   </details>
 </div>
 
+<div class="section-heading" id="sec-done">Completed</div>
+
 <!-- FAB -->
 <button class="fab" onclick="openModal()" title="Add task">+</button>
 
@@ -1098,14 +1100,43 @@ function updateCounts() {
   document.getElementById('progressBar').style.width = (total ? done/total*100 : 0) + '%';
 }
 
+/* ---- Card section tracking ---- */
+var _originalSection = {};  /* id -> sectionId, so unchecking can move card back */
+
+function getCardSection(card) {
+  var prev = card.previousElementSibling;
+  while (prev) {
+    if (prev.classList && prev.classList.contains('section-heading')) return prev.id;
+    prev = prev.previousElementSibling;
+  }
+  return 'sec-A';
+}
+
+function moveCard(card, toSectionId) {
+  var sections = Array.from(document.querySelectorAll('.section-heading'));
+  var target = document.getElementById(toSectionId);
+  if (!target) return;
+  var idx = sections.indexOf(target);
+  var anchor = (idx >= 0 && idx < sections.length - 1) ? sections[idx + 1] : null;
+  if (anchor) { anchor.parentNode.insertBefore(card, anchor); }
+  else { var fab = document.querySelector('.fab'); fab.parentNode.insertBefore(card, fab); }
+}
+
 /* ---- Checkbox persist ---- */
 function persist(id) {
   var cb = document.getElementById(id);
   var card = document.getElementById('task-' + id);
   var title = document.getElementById('title-' + id);
   fbSet('checked/' + id, cb.checked);
-  if (cb.checked) { card.classList.add('done'); title.classList.add('checked-title'); }
-  else { card.classList.remove('done'); title.classList.remove('checked-title'); }
+  if (cb.checked) {
+    if (!_originalSection[id]) _originalSection[id] = getCardSection(card);
+    card.classList.add('done'); title.classList.add('checked-title');
+    moveCard(card, 'sec-done');
+  } else {
+    card.classList.remove('done'); title.classList.remove('checked-title');
+    moveCard(card, _originalSection[id] || 'sec-A');
+    delete _originalSection[id];
+  }
   updateCounts();
 }
 
@@ -1115,8 +1146,17 @@ function applyChecked(id, val) {
   var title = document.getElementById('title-' + id);
   if (!cb) return;
   cb.checked = !!val;
-  if (val) { if(card) card.classList.add('done'); if(title) title.classList.add('checked-title'); }
-  else { if(card) card.classList.remove('done'); if(title) title.classList.remove('checked-title'); }
+  if (val) {
+    if (!_originalSection[id]) _originalSection[id] = getCardSection(card);
+    if(card) card.classList.add('done');
+    if(title) title.classList.add('checked-title');
+    if(card) moveCard(card, 'sec-done');
+  } else {
+    if(card) card.classList.remove('done');
+    if(title) title.classList.remove('checked-title');
+    if(card && _originalSection[id]) moveCard(card, _originalSection[id]);
+    delete _originalSection[id];
+  }
 }
 
 /* ---- Helpers ---- */
@@ -1352,6 +1392,7 @@ function setupListeners() {
       var t = data[id];
       if (!document.getElementById('task-' + t.id)) {
         createCard(t.id, t.title, t.desc||'', t.priority, t.section, false);
+        _originalSection[t.id] = t.section;
         applyChecked(t.id, _checkedCache[t.id]);
       }
     });
