@@ -1069,6 +1069,7 @@
    Firebase-backed state — shared across all browsers
    ============================================================ */
 var R = DB_ROOT; /* short alias */
+var _checkedCache = {};  /* cache checked state so dynamic cards can pick it up */
 
 function fbSet(path, val) { db.ref(R + '/' + path).set(val); }
 function fbRef(path) { return db.ref(R + '/' + path); }
@@ -1326,10 +1327,10 @@ function deleteComment(taskId, key) {
 function setupListeners() {
   /* Checked state */
   fbRef('checked').on('value', function(snap) {
-    var data = snap.val() || {};
+    _checkedCache = snap.val() || {};
     document.querySelectorAll('.card').forEach(function(card) {
       var id = card.id.replace('task-','');
-      applyChecked(id, data[id]);
+      applyChecked(id, _checkedCache[id]);
     });
     updateCounts();
   });
@@ -1351,6 +1352,7 @@ function setupListeners() {
       var t = data[id];
       if (!document.getElementById('task-' + t.id)) {
         createCard(t.id, t.title, t.desc||'', t.priority, t.section, false);
+        applyChecked(t.id, _checkedCache[t.id]);
       }
     });
     updateCounts();
